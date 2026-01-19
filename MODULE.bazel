@@ -36,7 +36,7 @@ single_version_override(
 
 git_override(
     module_name = "rules_ruby",
-    commit = "7c30a547c7665318a31010017b806030c8316183",
+    commit = "391e2fde64a7311cf56f685327ec5836648d122b",
     remote = "https://github.com/bazel-contrib/rules_ruby",
 )
 
@@ -261,6 +261,7 @@ ruby.toolchain(
         "curl",
         "libyaml",
     ],
+    rv_version = "20260114",
     version_file = "//:rb/.ruby-version",
 )
 ruby.bundle_fetch(
@@ -271,7 +272,6 @@ ruby.bundle_fetch(
         "//:rb/selenium-devtools.gemspec",
         "//:rb/selenium-webdriver.gemspec",
     ],
-    excluded_gems = ["psych"],  # Only applied to rv-ruby
     gem_checksums = {
         "activesupport-7.2.3": "5675c9770dac93e371412684249f9dc3c8cec104efd0624362a520ae685c7b10",
         "addressable-2.8.8": "7c13b8f9536cf6364c03b9d417c19986019e28f7c00ac8132da4eb0fe393b057",
@@ -361,6 +361,7 @@ ruby.bundle_fetch(
     },
     gemfile = "//:rb/Gemfile",
     gemfile_lock = "//:rb/Gemfile.lock",
+    ruby_version_file = "//:rb/.ruby-version",
 )
 use_repo(ruby, "bundle", "ruby", "ruby_toolchains")
 
