@@ -36,7 +36,7 @@ single_version_override(
 
 git_override(
     module_name = "rules_ruby",
-    commit = "cfba275400f0fbe74794c5c37815cf4474ed0e93",
+    commit = "7c30a547c7665318a31010017b806030c8316183",
     remote = "https://github.com/bazel-contrib/rules_ruby",
 )
 
@@ -261,14 +261,6 @@ ruby.toolchain(
         "curl",
         "libyaml",
     ],
-    ruby_build_version = "20260110",
-    rv_checksums = {
-        "linux-arm64": "63f6b55f7a2b52ffdbd503c31e6dbede418491ebbd98dfa79c3ad2b2a9cccf4c",
-        "linux-x86_64": "52befc54a5af5c9c4927d3154aa3abb92599e61d9512b4a81d66dfcf56157f54",
-        "macos-arm64": "2bb97fefd080d301688b45d6d57a087d13d53b42a015e9b9d8ce292ef806f19d",
-        "macos-x86_64": "331e0ca846531935dcd25cd1d45128fe465dc0ad1df40cfc71c3daad196952d3",
-    },
-    rv_version = "20260114",
     version_file = "//:rb/.ruby-version",
 )
 ruby.bundle_fetch(
@@ -279,6 +271,7 @@ ruby.bundle_fetch(
         "//:rb/selenium-devtools.gemspec",
         "//:rb/selenium-webdriver.gemspec",
     ],
+    excluded_gems = ["psych"],  # Only applied to rv-ruby
     gem_checksums = {
         "activesupport-7.2.3": "5675c9770dac93e371412684249f9dc3c8cec104efd0624362a520ae685c7b10",
         "addressable-2.8.8": "7c13b8f9536cf6364c03b9d417c19986019e28f7c00ac8132da4eb0fe393b057",
@@ -292,6 +285,8 @@ ruby.bundle_fetch(
         "crack-1.0.1": "ff4a10390cd31d66440b7524eb1841874db86201d5b70032028553130b6d4c7e",
         "csv-3.3.5": "6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f",
         "curb-1.0.9": "07e5b74a4836103ce186827528f76a22d3991a9b7c45f5c10ee18ee7b03feb0d",
+        "date-3.5.1": "750d06384d7b9c15d562c76291407d89e368dda4d4fff957eb94962d325a0dc0",
+        "date-3.5.1-java": "12e09477dc932afe45bf768cd362bf73026804e0db1e6c314186d6cd0bee3344",
         "debug-1.11.1": "2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6",
         "diff-lcs-1.6.2": "9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962",
         "drb-2.2.3": "0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373",

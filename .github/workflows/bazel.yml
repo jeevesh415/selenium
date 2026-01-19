@@ -114,7 +114,9 @@ jobs:
         run: echo '${{ inputs.python-version }}' > py/.python-version
       - name: Set Ruby version
         if: inputs.ruby-version != ''
-        run: echo '${{ inputs.ruby-version }}' > rb/.ruby-version
+        run: |
+          echo '${{ inputs.ruby-version }}' > rb/.ruby-version
+          sed -i '/^[[:space:]]*rv_version/d' MODULE.bazel
       - name: Setup DotNet
         if: inputs.dotnet-version != ''
         uses: actions/setup-dotnet@v4
