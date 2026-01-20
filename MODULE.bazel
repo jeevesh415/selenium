@@ -36,7 +36,7 @@ single_version_override(
 
 git_override(
     module_name = "rules_ruby",
-    commit = "889a12bf42ae39db1febf54759b2a115e8192b35",
+    commit = "9c932d9167a54b1ae19b8b30d7d9a81c72d4b6e3",
     remote = "https://github.com/bazel-contrib/rules_ruby",
 )
 
