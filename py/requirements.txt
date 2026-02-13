@@ -2,6 +2,7 @@ async-generator==1.10
 attrs==25.4.0
 backports.tarfile==1.2.0
 cachetools==7.0.1
+pycddl
 certifi==2026.1.4
 cffi==2.0.0
 chardet==5.2.0

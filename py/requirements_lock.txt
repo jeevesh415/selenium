@@ -416,7 +416,6 @@ jeepney==0.9.0 \
     --hash=sha256:cf0e9e845622b81e4a28df94c40345400256ec608d0e55bb8a3feaa9163f5732
     # via
     #   -r py/requirements.txt
-    #   keyring
     #   secretstorage
 jinja2==3.1.6 \
     --hash=sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d \
@@ -874,6 +873,30 @@ pluggy==1.6.0 \
     #   -r py/requirements.txt
     #   pytest
     #   tox
+pycddl==0.6.4 \
+    --hash=sha256:028d425d3ae41682bc606ed839fd93b97d787ce19bd50583c9ffaf542b7e68eb \
+    --hash=sha256:22bc96c3bc261202b7f8652da74d2f8b84a4ba21aeaedb1d40f3d7c2f013d4c9 \
+    --hash=sha256:314ef71197d49ec32e8763d759ab53a6962bea8d029d1b01992ecf3d9388a93b \
+    --hash=sha256:39ca675f341a6a77654f4f6759bcb3ce0d47f1a772cb87e99b4e61d86bcb6053 \
+    --hash=sha256:3c2696412b50381e679085f9c76ae1ccbc1fd6538a5c4c6b6349f9d906893d4b \
+    --hash=sha256:4a114e6a0baa564bf8c81c9c1660a80b7d7acfa8ceaece4656cce797093624e0 \
+    --hash=sha256:4f20c7ad8c2ee8703bb08e9dd071f03589ff7aaeaa27a8fc5072de40f66166e1 \
+    --hash=sha256:5ba650b476a56ba2e0a9db4b70a3a651601f7176a0733aa64a43b45bdccaa85f \
+    --hash=sha256:61d079fff3f29198ed18c5435ed50abc6e98f17f0e0c3805f94ee791577d09e1 \
+    --hash=sha256:6946ba4377b5470bd637434fa9b26d596de8ff2cc9c5473483b81418a525397a \
+    --hash=sha256:84870a702b519826b54b127742e784e745c53bf1373d05e0f96df0a89fc5ceca \
+    --hash=sha256:8809fad90afeff76bf28ad2de9ea157cc0033a2321d80c2e92858c4d0af2384f \
+    --hash=sha256:8a92bbce1de1d48ea8deeee0008eb3a81f0811c80174e3c7169dcf9bd5b2b696 \
+    --hash=sha256:8d6c9708685a2e0f189d8e89f1268b6ad4e1c68251ed39737cc67ed7bd866eec \
+    --hash=sha256:8e2ebc4531889d406ab7cb351cfb6479243d8e12d98694936a4c264694d67775 \
+    --hash=sha256:8e723cb86cb3ce14a57ee369aee28a3e113b290a13905eadc56741ccafbfdbaa \
+    --hash=sha256:91c59bb095a70d8714dc1859e06f29840575fd3edc6a0a871fed850fd524b306 \
+    --hash=sha256:99fd752db751e7c4a1c50ef448d7887610efa6afedcb0fa3dff767a3b4825017 \
+    --hash=sha256:a1ed33d3427507ee274663c9ea0dea2f2cd3c8473ff1c4247970d4b5697ff330 \
+    --hash=sha256:cd2a86b339a013402d90469e28a8b1b03d06c607e8a1e8db52e8d91f76ed859d \
+    --hash=sha256:f2324b81e344d402131447d0bb2a4b1ffaae10a0d2d11c226acbc3b8156f9b37 \
+    --hash=sha256:f46649bfc665f7f1fa06b5c451dd6cd8f18899b12e5a56e5534a24d800bca541
+    # via -r py/requirements.txt
 pycparser==3.0 \
     --hash=sha256:600f49d217304a5902ac3c37e1281c9fe94e4d0489de643a9504c5cdfdfc6b29 \
     --hash=sha256:b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992
@@ -965,9 +988,7 @@ rich==14.3.2 \
 secretstorage==3.5.0 \
     --hash=sha256:0ce65888c0725fcb2c5bc0fdb8e5438eece02c523557ea40ce0703c266248137 \
     --hash=sha256:f04b8e4689cbce351744d5537bf6b1329c6fc68f91fa666f60a380edddcd11be
-    # via
-    #   -r py/requirements.txt
-    #   keyring
+    # via -r py/requirements.txt
 sniffio==1.3.1 \
     --hash=sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2 \
     --hash=sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc

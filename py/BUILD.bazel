@@ -10,6 +10,7 @@ load("@rules_python//sphinxdocs:sphinx.bzl", "sphinx_build_binary", "sphinx_docs
 load("//common:defs.bzl", "copy_file")
 load("//py:defs.bzl", "generate_devtools", "py_test_suite")
 load("//py/private:browsers.bzl", "BROWSERS")
+load("//py/private:generate_bidi.bzl", "generate_bidi")
 load("//py/private:import.bzl", "py_import")
 
 exports_files(
@@ -574,6 +575,12 @@ py_binary(
     deps = [requirement("inflection")],
 )
 
+py_binary(
+    name = "generate_bidi",
+    srcs = ["generate_bidi.py"],
+    srcs_version = "PY3",
+)
+
 [generate_devtools(
     name = "create-cdp-srcs-{}".format(devtools_version),
     browser_protocol = "//common/devtools/chromium/{}:browser_protocol".format(devtools_version),
@@ -582,6 +589,15 @@ py_binary(
     outdir = "selenium/webdriver/common/devtools/{}".format(devtools_version),
     protocol_version = devtools_version,
 ) for devtools_version in BROWSER_VERSIONS]
+
+# Pilot BiDi code generation from CDDL specification
+generate_bidi(
+    name = "create-bidi-src",
+    cddl_file = "//common/bidi/spec:remote.cddl",
+    generator = ":generate_bidi",
+    module_name = "selenium/webdriver/common/bidi",
+    spec_version = "1.0",
+)
 
 py_test_suite(
     name = "unit",
@@ -761,6 +777,30 @@ BROWSER_TESTS = {
         "firefox",
     ]
 ]
+
+# BiDi baseline tests (hand-written modules baseline for Phase 6 integration validation)
+py_test_suite(
+    name = "test-bidi-baseline",
+    size = "large",
+    srcs = BIDI_TESTS + glob([
+        "test/selenium/webdriver/support/**/*.py",
+    ]),
+    args = [
+        "--instafail",
+        "--bidi",
+        "--browser=chrome",
+    ],
+    data = BROWSERS["chrome"]["data"],
+    env_inherit = ["DISPLAY"],
+    tags = ["no-sandbox"] + BROWSERS["chrome"]["tags"],
+    deps = [
+        ":chrome",
+        ":common",
+        ":init-tree",
+        ":support",
+        ":webserver",
+    ] + TEST_DEPS,
+)
 
 test_suite(
     name = "test-remote",
