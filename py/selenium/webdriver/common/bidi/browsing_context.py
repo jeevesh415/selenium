@@ -14,6 +14,19 @@ from dataclasses import dataclass
 
 
 @dataclass
+class Info:
+    """Info type type."""
+
+    children: Optional[Any] = None
+    client_window: Optional[Any] = None
+    context: Optional[Any] = None
+    original_opener: Optional[Any] = None
+    url: Optional[str] = None
+    user_context: Optional[Any] = None
+    parent: Optional[Any] = None
+
+
+@dataclass
 class AccessibilityLocator:
     """AccessibilityLocator type type."""
 
@@ -55,6 +68,16 @@ class XPathLocator:
 
     type: Optional[Any] = None
     value: Optional[str] = None
+
+
+@dataclass
+class BaseNavigationInfo:
+    """BaseNavigationInfo type type."""
+
+    context: Optional[Any] = None
+    navigation: Optional[Any] = None
+    timestamp: Optional[Any] = None
+    url: Optional[str] = None
 
 
 @dataclass
@@ -101,6 +124,13 @@ class BoxClipRectangle:
 
 
 @dataclass
+class CaptureScreenshotResult:
+    """CaptureScreenshotResult type type."""
+
+    data: Optional[str] = None
+
+
+@dataclass
 class CloseParameters:
     """CloseParameters type type."""
 
@@ -119,11 +149,25 @@ class CreateParameters:
 
 
 @dataclass
+class CreateResult:
+    """CreateResult type type."""
+
+    context: Optional[Any] = None
+
+
+@dataclass
 class GetTreeParameters:
     """GetTreeParameters type type."""
 
     max_depth: Optional[Any] = None
     root: Optional[Any] = None
+
+
+@dataclass
+class GetTreeResult:
+    """GetTreeResult type type."""
+
+    contexts: Optional[Any] = None
 
 
 @dataclass
@@ -146,12 +190,27 @@ class LocateNodesParameters:
 
 
 @dataclass
+class LocateNodesResult:
+    """LocateNodesResult type type."""
+
+    nodes: Optional[List[Optional[Any]]] = field(default_factory=list)
+
+
+@dataclass
 class NavigateParameters:
     """NavigateParameters type type."""
 
     context: Optional[Any] = None
     url: Optional[str] = None
     wait: Optional[Any] = None
+
+
+@dataclass
+class NavigateResult:
+    """NavigateResult type type."""
+
+    navigation: Optional[Any] = None
+    url: Optional[str] = None
 
 
 @dataclass
@@ -163,6 +222,13 @@ class PrintParameters:
     margin: Optional[Any] = None
     page: Optional[Any] = None
     shrink_to_fit: Optional[Any] = None
+
+
+@dataclass
+class PrintResult:
+    """PrintResult type type."""
+
+    data: Optional[str] = None
 
 
 @dataclass
@@ -197,6 +263,58 @@ class TraverseHistoryParameters:
 
     context: Optional[Any] = None
     delta: Optional[Any] = None
+
+
+@dataclass
+class HistoryUpdatedParameters:
+    """HistoryUpdatedParameters type type."""
+
+    context: Optional[Any] = None
+    timestamp: Optional[Any] = None
+    url: Optional[str] = None
+
+
+@dataclass
+class DownloadWillBeginParams:
+    """DownloadWillBeginParams type type."""
+
+    suggested_filename: Optional[str] = None
+
+
+@dataclass
+class DownloadCanceledParams:
+    """DownloadCanceledParams type type."""
+
+    status: Optional[Any] = None
+
+
+@dataclass
+class DownloadCompleteParams:
+    """DownloadCompleteParams type type."""
+
+    status: Optional[Any] = None
+    filepath: Optional[Any] = None
+
+
+@dataclass
+class UserPromptClosedParameters:
+    """UserPromptClosedParameters type type."""
+
+    context: Optional[Any] = None
+    accepted: Optional[bool] = None
+    type: Optional[Any] = None
+    user_text: Optional[str] = None
+
+
+@dataclass
+class UserPromptOpenedParameters:
+    """UserPromptOpenedParameters type type."""
+
+    context: Optional[Any] = None
+    handler: Optional[Any] = None
+    message: Optional[str] = None
+    type: Optional[Any] = None
+    default_value: Optional[str] = None
 
 
 class BrowsingContext:
@@ -323,4 +441,129 @@ class BrowsingContext:
         }
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.traverseHistory", params)
+
+    def context_created(self, children: Any = None, client_window: Any = None, context: Any = None, original_opener: Any = None, url: Any = None, user_context: Any = None, parent: Any = None) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.contextCreated."""
+        params = {
+            "children": children,
+            "clientWindow": client_window,
+            "context": context,
+            "originalOpener": original_opener,
+            "url": url,
+            "userContext": user_context,
+            "parent": parent,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.contextCreated", params)
+
+    def context_destroyed(self, children: Any = None, client_window: Any = None, context: Any = None, original_opener: Any = None, url: Any = None, user_context: Any = None, parent: Any = None) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.contextDestroyed."""
+        params = {
+            "children": children,
+            "clientWindow": client_window,
+            "context": context,
+            "originalOpener": original_opener,
+            "url": url,
+            "userContext": user_context,
+            "parent": parent,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.contextDestroyed", params)
+
+    def navigation_started(self) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.navigationStarted."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.navigationStarted", params)
+
+    def fragment_navigated(self) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.fragmentNavigated."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.fragmentNavigated", params)
+
+    def history_updated(self, context: Any = None, timestamp: Any = None, url: Any = None) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.historyUpdated."""
+        params = {
+            "context": context,
+            "timestamp": timestamp,
+            "url": url,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.historyUpdated", params)
+
+    def dom_content_loaded(self) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.domContentLoaded."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.domContentLoaded", params)
+
+    def load(self) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.load."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.load", params)
+
+    def download_will_begin(self, suggested_filename: Any = None) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.downloadWillBegin."""
+        params = {
+            "suggestedFilename": suggested_filename,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.downloadWillBegin", params)
+
+    def download_end(self) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.downloadEnd."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.downloadEnd", params)
+
+    def navigation_aborted(self) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.navigationAborted."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.navigationAborted", params)
+
+    def navigation_committed(self) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.navigationCommitted."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.navigationCommitted", params)
+
+    def navigation_failed(self) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.navigationFailed."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.navigationFailed", params)
+
+    def user_prompt_closed(self, context: Any = None, accepted: bool = None, type: Any = None, user_text: Any = None) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.userPromptClosed."""
+        params = {
+            "context": context,
+            "accepted": accepted,
+            "type": type,
+            "userText": user_text,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.userPromptClosed", params)
+
+    def user_prompt_opened(self, context: Any = None, handler: Any = None, message: Any = None, type: Any = None, default_value: Any = None) -> Generator[dict, dict, dict]:
+        """Execute browsingContext.userPromptOpened."""
+        params = {
+            "context": context,
+            "handler": handler,
+            "message": message,
+            "type": type,
+            "defaultValue": default_value,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("browsingContext.userPromptOpened", params)
 

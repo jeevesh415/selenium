@@ -593,7 +593,7 @@ py_binary(
 # Pilot BiDi code generation from CDDL specification
 generate_bidi(
     name = "create-bidi-src",
-    cddl_file = "//common/bidi/spec:remote.cddl",
+    cddl_file = "//common/bidi/spec:all.cddl",
     generator = ":generate_bidi",
     module_name = "selenium/webdriver/common/bidi",
     spec_version = "1.0",

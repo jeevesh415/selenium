@@ -9,6 +9,7 @@ from .browser import Browser
 from .browsing_context import BrowsingContext
 from .emulation import Emulation
 from .input import Input
+from .log import Log
 from .network import Network
 from .script import Script
 from .session import Session
@@ -20,6 +21,7 @@ __all__ = [
     "BrowsingContext",
     "Emulation",
     "Input",
+    "Log",
     "Network",
     "Script",
     "Session",

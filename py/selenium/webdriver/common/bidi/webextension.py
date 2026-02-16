@@ -45,6 +45,13 @@ class ExtensionBase64Encoded:
 
 
 @dataclass
+class InstallResult:
+    """InstallResult type type."""
+
+    extension: Optional[Any] = None
+
+
+@dataclass
 class UninstallParameters:
     """UninstallParameters type type."""
 

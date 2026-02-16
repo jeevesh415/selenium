@@ -116,10 +116,41 @@ class UnsubscribeByAttributesRequest:
 
 
 @dataclass
+class StatusResult:
+    """StatusResult type type."""
+
+    ready: Optional[bool] = None
+    message: Optional[str] = None
+
+
+@dataclass
 class NewParameters:
     """NewParameters type type."""
 
     capabilities: Optional[Any] = None
+
+
+@dataclass
+class NewResult:
+    """NewResult type type."""
+
+    session_id: Optional[str] = None
+    accept_insecure_certs: Optional[bool] = None
+    browser_name: Optional[str] = None
+    browser_version: Optional[str] = None
+    platform_name: Optional[str] = None
+    set_window_rect: Optional[bool] = None
+    user_agent: Optional[str] = None
+    proxy: Optional[Any] = None
+    unhandled_prompt_behavior: Optional[Any] = None
+    web_socket_url: Optional[str] = None
+
+
+@dataclass
+class SubscribeResult:
+    """SubscribeResult type type."""
+
+    subscription: Optional[Any] = None
 
 
 class Session:

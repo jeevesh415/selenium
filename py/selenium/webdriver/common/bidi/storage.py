@@ -62,6 +62,14 @@ class GetCookiesParameters:
 
 
 @dataclass
+class GetCookiesResult:
+    """GetCookiesResult type type."""
+
+    cookies: Optional[List[Optional[Any]]] = field(default_factory=list)
+    partition_key: Optional[Any] = None
+
+
+@dataclass
 class PartialCookie:
     """PartialCookie type type."""
 
@@ -84,11 +92,25 @@ class SetCookieParameters:
 
 
 @dataclass
+class SetCookieResult:
+    """SetCookieResult type type."""
+
+    partition_key: Optional[Any] = None
+
+
+@dataclass
 class DeleteCookiesParameters:
     """DeleteCookiesParameters type type."""
 
     filter: Optional[Any] = None
     partition: Optional[Any] = None
+
+
+@dataclass
+class DeleteCookiesResult:
+    """DeleteCookiesResult type type."""
+
+    partition_key: Optional[Any] = None
 
 
 class Storage:

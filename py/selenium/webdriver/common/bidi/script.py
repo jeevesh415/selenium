@@ -162,6 +162,73 @@ class BigIntValue:
 
 
 @dataclass
+class BaseRealmInfo:
+    """BaseRealmInfo type type."""
+
+    realm: Optional[Any] = None
+    origin: Optional[str] = None
+
+
+@dataclass
+class WindowRealmInfo:
+    """WindowRealmInfo type type."""
+
+    type: Optional[Any] = None
+    context: Optional[Any] = None
+    sandbox: Optional[str] = None
+
+
+@dataclass
+class DedicatedWorkerRealmInfo:
+    """DedicatedWorkerRealmInfo type type."""
+
+    type: Optional[Any] = None
+    owners: Optional[List[Optional[Any]]] = field(default_factory=list)
+
+
+@dataclass
+class SharedWorkerRealmInfo:
+    """SharedWorkerRealmInfo type type."""
+
+    type: Optional[Any] = None
+
+
+@dataclass
+class ServiceWorkerRealmInfo:
+    """ServiceWorkerRealmInfo type type."""
+
+    type: Optional[Any] = None
+
+
+@dataclass
+class WorkerRealmInfo:
+    """WorkerRealmInfo type type."""
+
+    type: Optional[Any] = None
+
+
+@dataclass
+class PaintWorkletRealmInfo:
+    """PaintWorkletRealmInfo type type."""
+
+    type: Optional[Any] = None
+
+
+@dataclass
+class AudioWorkletRealmInfo:
+    """AudioWorkletRealmInfo type type."""
+
+    type: Optional[Any] = None
+
+
+@dataclass
+class WorkletRealmInfo:
+    """WorkletRealmInfo type type."""
+
+    type: Optional[Any] = None
+
+
+@dataclass
 class SharedReference:
     """SharedReference type type."""
 
@@ -403,6 +470,14 @@ class StackTrace:
 
 
 @dataclass
+class Source:
+    """Source type type."""
+
+    realm: Optional[Any] = None
+    context: Optional[Any] = None
+
+
+@dataclass
 class RealmTarget:
     """RealmTarget type type."""
 
@@ -426,6 +501,13 @@ class AddPreloadScriptParameters:
     contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
     user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
     sandbox: Optional[str] = None
+
+
+@dataclass
+class AddPreloadScriptResult:
+    """AddPreloadScriptResult type type."""
+
+    script: Optional[Any] = None
 
 
 @dataclass
@@ -471,10 +553,33 @@ class GetRealmsParameters:
 
 
 @dataclass
+class GetRealmsResult:
+    """GetRealmsResult type type."""
+
+    realms: Optional[List[Optional[Any]]] = field(default_factory=list)
+
+
+@dataclass
 class RemovePreloadScriptParameters:
     """RemovePreloadScriptParameters type type."""
 
     script: Optional[Any] = None
+
+
+@dataclass
+class MessageParameters:
+    """MessageParameters type type."""
+
+    channel: Optional[Any] = None
+    data: Optional[Any] = None
+    source: Optional[Any] = None
+
+
+@dataclass
+class RealmDestroyedParameters:
+    """RealmDestroyedParameters type type."""
+
+    realm: Optional[Any] = None
 
 
 class Script:
@@ -548,4 +653,29 @@ class Script:
         }
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.removePreloadScript", params)
+
+    def message(self, channel: Any = None, data: Any = None, source: Any = None) -> Generator[dict, dict, dict]:
+        """Execute script.message."""
+        params = {
+            "channel": channel,
+            "data": data,
+            "source": source,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("script.message", params)
+
+    def realm_created(self) -> Generator[dict, dict, dict]:
+        """Execute script.realmCreated."""
+        params = {
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("script.realmCreated", params)
+
+    def realm_destroyed(self, realm: Any = None) -> Generator[dict, dict, dict]:
+        """Execute script.realmDestroyed."""
+        params = {
+            "realm": realm,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("script.realmDestroyed", params)
 

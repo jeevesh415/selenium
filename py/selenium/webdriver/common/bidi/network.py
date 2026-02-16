@@ -14,12 +14,33 @@ from dataclasses import dataclass
 
 
 @dataclass
+class AuthChallenge:
+    """AuthChallenge type type."""
+
+    scheme: Optional[str] = None
+    realm: Optional[str] = None
+
+
+@dataclass
 class AuthCredentials:
     """AuthCredentials type type."""
 
     type: Optional[Any] = None
     username: Optional[str] = None
     password: Optional[str] = None
+
+
+@dataclass
+class BaseParameters:
+    """BaseParameters type type."""
+
+    context: Optional[Any] = None
+    is_blocked: Optional[bool] = None
+    navigation: Optional[Any] = None
+    redirect_count: Optional[Any] = None
+    request: Optional[Any] = None
+    timestamp: Optional[Any] = None
+    intercepts: Optional[List[Optional[Any]]] = field(default_factory=list)
 
 
 @dataclass
@@ -62,11 +83,66 @@ class CookieHeader:
 
 
 @dataclass
+class FetchTimingInfo:
+    """FetchTimingInfo type type."""
+
+    time_origin: Optional[Any] = None
+    request_time: Optional[Any] = None
+    redirect_start: Optional[Any] = None
+    redirect_end: Optional[Any] = None
+    fetch_start: Optional[Any] = None
+    dns_start: Optional[Any] = None
+    dns_end: Optional[Any] = None
+    connect_start: Optional[Any] = None
+    connect_end: Optional[Any] = None
+    tls_start: Optional[Any] = None
+    request_start: Optional[Any] = None
+    response_start: Optional[Any] = None
+    response_end: Optional[Any] = None
+
+
+@dataclass
 class Header:
     """Header type type."""
 
     name: Optional[str] = None
     value: Optional[Any] = None
+
+
+@dataclass
+class Initiator:
+    """Initiator type type."""
+
+    column_number: Optional[Any] = None
+    line_number: Optional[Any] = None
+    request: Optional[Any] = None
+    stack_trace: Optional[Any] = None
+    type: Optional[Any] = None
+
+
+@dataclass
+class ResponseContent:
+    """ResponseContent type type."""
+
+    size: Optional[Any] = None
+
+
+@dataclass
+class ResponseData:
+    """ResponseData type type."""
+
+    url: Optional[str] = None
+    protocol: Optional[str] = None
+    status: Optional[Any] = None
+    status_text: Optional[str] = None
+    from_cache: Optional[bool] = None
+    headers: Optional[List[Optional[Any]]] = field(default_factory=list)
+    mime_type: Optional[str] = None
+    bytes_received: Optional[Any] = None
+    headers_size: Optional[Any] = None
+    body_size: Optional[Any] = None
+    content: Optional[Any] = None
+    auth_challenges: Optional[List[Optional[Any]]] = field(default_factory=list)
 
 
 @dataclass
@@ -116,12 +192,26 @@ class AddDataCollectorParameters:
 
 
 @dataclass
+class AddDataCollectorResult:
+    """AddDataCollectorResult type type."""
+
+    collector: Optional[Any] = None
+
+
+@dataclass
 class AddInterceptParameters:
     """AddInterceptParameters type type."""
 
     phases: Optional[List[Optional[Any]]] = field(default_factory=list)
     contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
     url_patterns: Optional[List[Optional[Any]]] = field(default_factory=list)
+
+
+@dataclass
+class AddInterceptResult:
+    """AddInterceptResult type type."""
+
+    intercept: Optional[Any] = None
 
 
 @dataclass
@@ -185,6 +275,13 @@ class GetDataParameters:
 
 
 @dataclass
+class GetDataResult:
+    """GetDataResult type type."""
+
+    bytes: Optional[Any] = None
+
+
+@dataclass
 class ProvideResponseParameters:
     """ProvideResponseParameters type type."""
 
@@ -225,6 +322,13 @@ class SetExtraHeadersParameters:
     headers: Optional[List[Optional[Any]]] = field(default_factory=list)
     contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
     user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+
+
+@dataclass
+class ResponseStartedParameters:
+    """ResponseStartedParameters type type."""
+
+    response: Optional[Any] = None
 
 
 class Network:
@@ -365,4 +469,52 @@ class Network:
         }
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.setExtraHeaders", params)
+
+    def auth_required(self, response: Any = None, method: Any = None, params: Any = None) -> Generator[dict, dict, dict]:
+        """Execute network.authRequired."""
+        params = {
+            "response": response,
+            "method": method,
+            "params": params,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("network.authRequired", params)
+
+    def before_request_sent(self, initiator: Any = None, method: Any = None, params: Any = None) -> Generator[dict, dict, dict]:
+        """Execute network.beforeRequestSent."""
+        params = {
+            "initiator": initiator,
+            "method": method,
+            "params": params,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("network.beforeRequestSent", params)
+
+    def fetch_error(self, error_text: Any = None, method: Any = None, params: Any = None) -> Generator[dict, dict, dict]:
+        """Execute network.fetchError."""
+        params = {
+            "errorText": error_text,
+            "method": method,
+            "params": params,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("network.fetchError", params)
+
+    def response_completed(self, response: Any = None, method: Any = None, params: Any = None) -> Generator[dict, dict, dict]:
+        """Execute network.responseCompleted."""
+        params = {
+            "response": response,
+            "method": method,
+            "params": params,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("network.responseCompleted", params)
+
+    def response_started(self, response: Any = None) -> Generator[dict, dict, dict]:
+        """Execute network.responseStarted."""
+        params = {
+            "response": response,
+        }
+        params = {k: v for k, v in params.items() if v is not None}
+        return command_builder("network.responseStarted", params)
 

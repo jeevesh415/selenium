@@ -43,6 +43,20 @@ class CreateUserContextParameters:
 
 
 @dataclass
+class GetClientWindowsResult:
+    """GetClientWindowsResult type type."""
+
+    client_windows: Optional[List[Optional[Any]]] = field(default_factory=list)
+
+
+@dataclass
+class GetUserContextsResult:
+    """GetUserContextsResult type type."""
+
+    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+
+
+@dataclass
 class RemoveUserContextParameters:
     """RemoveUserContextParameters type type."""
 
