@@ -63,9 +63,15 @@ class Permissions:
         Raises:
             ValueError: If the permission state is invalid.
         """
-        if state not in [PermissionState.GRANTED, PermissionState.DENIED, PermissionState.PROMPT]:
+        if state not in [
+            PermissionState.GRANTED,
+            PermissionState.DENIED,
+            PermissionState.PROMPT,
+        ]:
             valid_states = f"{PermissionState.GRANTED}, {PermissionState.DENIED}, {PermissionState.PROMPT}"
-            raise ValueError(f"Invalid permission state. Must be one of: {valid_states}")
+            raise ValueError(
+                f"Invalid permission state. Must be one of: {valid_states}"
+            )
 
         if isinstance(descriptor, str):
             permission_descriptor = PermissionDescriptor(descriptor)
