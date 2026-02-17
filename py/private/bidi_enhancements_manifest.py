@@ -69,6 +69,12 @@ ENHANCEMENTS: dict[str, dict[str, dict[str, Any]]] = {
         # Note: set_download_behavior requires method signature transformation
         # which is handled separately - not yet implemented in the generator
     },
+    "browsingContext": {
+        # Method enhancements
+        "create": {
+            "extract_field": "context",
+        },
+    },
 }
 
 
