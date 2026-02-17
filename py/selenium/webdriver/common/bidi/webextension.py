@@ -6,10 +6,10 @@
 # WebDriver BiDi module: webExtension
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
-from typing import Generator
+from typing import Any
 from dataclasses import dataclass
 
 
@@ -17,45 +17,45 @@ from dataclasses import dataclass
 class InstallParameters:
     """InstallParameters type type."""
 
-    extension_data: Optional[Any] = None
+    extension_data: Any | None = None
 
 
 @dataclass
 class ExtensionPath:
     """ExtensionPath type type."""
 
-    type: Optional[Any] = None
-    path: Optional[str] = None
+    type: Any | None = None
+    path: str | None = None
 
 
 @dataclass
 class ExtensionArchivePath:
     """ExtensionArchivePath type type."""
 
-    type: Optional[Any] = None
-    path: Optional[str] = None
+    type: Any | None = None
+    path: str | None = None
 
 
 @dataclass
 class ExtensionBase64Encoded:
     """ExtensionBase64Encoded type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class InstallResult:
     """InstallResult type type."""
 
-    extension: Optional[Any] = None
+    extension: Any | None = None
 
 
 @dataclass
 class UninstallParameters:
     """UninstallParameters type type."""
 
-    extension: Optional[Any] = None
+    extension: Any | None = None
 
 
 class WebExtension:

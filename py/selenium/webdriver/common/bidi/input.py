@@ -6,10 +6,10 @@
 # WebDriver BiDi module: input
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
-from typing import Generator
+from typing import Any
 from dataclasses import dataclass
 
 
@@ -17,159 +17,159 @@ from dataclasses import dataclass
 class ElementOrigin:
     """ElementOrigin type type."""
 
-    type: Optional[Any] = None
-    element: Optional[Any] = None
+    type: Any | None = None
+    element: Any | None = None
 
 
 @dataclass
 class PerformActionsParameters:
     """PerformActionsParameters type type."""
 
-    context: Optional[Any] = None
-    actions: Optional[List[Optional[Any]]] = field(default_factory=list)
+    context: Any | None = None
+    actions: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class NoneSourceActions:
     """NoneSourceActions type type."""
 
-    type: Optional[Any] = None
-    id: Optional[str] = None
-    actions: Optional[List[Optional[Any]]] = field(default_factory=list)
+    type: Any | None = None
+    id: str | None = None
+    actions: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class KeySourceActions:
     """KeySourceActions type type."""
 
-    type: Optional[Any] = None
-    id: Optional[str] = None
-    actions: Optional[List[Optional[Any]]] = field(default_factory=list)
+    type: Any | None = None
+    id: str | None = None
+    actions: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class PointerSourceActions:
     """PointerSourceActions type type."""
 
-    type: Optional[Any] = None
-    id: Optional[str] = None
-    parameters: Optional[Any] = None
-    actions: Optional[List[Optional[Any]]] = field(default_factory=list)
+    type: Any | None = None
+    id: str | None = None
+    parameters: Any | None = None
+    actions: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class PointerParameters:
     """PointerParameters type type."""
 
-    pointer_type: Optional[Any] = None
+    pointer_type: Any | None = None
 
 
 @dataclass
 class WheelSourceActions:
     """WheelSourceActions type type."""
 
-    type: Optional[Any] = None
-    id: Optional[str] = None
-    actions: Optional[List[Optional[Any]]] = field(default_factory=list)
+    type: Any | None = None
+    id: str | None = None
+    actions: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class PauseAction:
     """PauseAction type type."""
 
-    type: Optional[Any] = None
-    duration: Optional[Any] = None
+    type: Any | None = None
+    duration: Any | None = None
 
 
 @dataclass
 class KeyDownAction:
     """KeyDownAction type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class KeyUpAction:
     """KeyUpAction type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class PointerUpAction:
     """PointerUpAction type type."""
 
-    type: Optional[Any] = None
-    button: Optional[Any] = None
+    type: Any | None = None
+    button: Any | None = None
 
 
 @dataclass
 class PointerDownAction:
     """PointerDownAction type type."""
 
-    type: Optional[Any] = None
-    button: Optional[Any] = None
+    type: Any | None = None
+    button: Any | None = None
 
 
 @dataclass
 class PointerMoveAction:
     """PointerMoveAction type type."""
 
-    type: Optional[Any] = None
-    x: Optional[Any] = None
-    y: Optional[Any] = None
-    duration: Optional[Any] = None
-    origin: Optional[Any] = None
+    type: Any | None = None
+    x: Any | None = None
+    y: Any | None = None
+    duration: Any | None = None
+    origin: Any | None = None
 
 
 @dataclass
 class WheelScrollAction:
     """WheelScrollAction type type."""
 
-    type: Optional[Any] = None
-    x: Optional[Any] = None
-    y: Optional[Any] = None
-    delta_x: Optional[Any] = None
-    delta_y: Optional[Any] = None
-    duration: Optional[Any] = None
-    origin: Optional[Any] = None
+    type: Any | None = None
+    x: Any | None = None
+    y: Any | None = None
+    delta_x: Any | None = None
+    delta_y: Any | None = None
+    duration: Any | None = None
+    origin: Any | None = None
 
 
 @dataclass
 class PointerCommonProperties:
     """PointerCommonProperties type type."""
 
-    width: Optional[Any] = None
-    height: Optional[Any] = None
-    pressure: Optional[Any] = None
-    tangential_pressure: Optional[Any] = None
+    width: Any | None = None
+    height: Any | None = None
+    pressure: Any | None = None
+    tangential_pressure: Any | None = None
 
 
 @dataclass
 class ReleaseActionsParameters:
     """ReleaseActionsParameters type type."""
 
-    context: Optional[Any] = None
+    context: Any | None = None
 
 
 @dataclass
 class SetFilesParameters:
     """SetFilesParameters type type."""
 
-    context: Optional[Any] = None
-    element: Optional[Any] = None
-    files: Optional[List[Optional[Any]]] = field(default_factory=list)
+    context: Any | None = None
+    element: Any | None = None
+    files: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class FileDialogInfo:
     """FileDialogInfo type type."""
 
-    context: Optional[Any] = None
-    element: Optional[Any] = None
-    multiple: Optional[bool] = None
+    context: Any | None = None
+    element: Any | None = None
+    multiple: bool | None = None
 
 
 class Input:
@@ -178,7 +178,7 @@ class Input:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def perform_actions(self, context: Any = None, actions: List[Any] = None) -> Generator[dict, dict, dict]:
+    def perform_actions(self, context: Any = None, actions: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute input.performActions."""
         params = {
             "context": context,
@@ -195,7 +195,7 @@ class Input:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("input.releaseActions", params)
 
-    def set_files(self, context: Any = None, element: Any = None, files: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_files(self, context: Any = None, element: Any = None, files: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute input.setFiles."""
         params = {
             "context": context,

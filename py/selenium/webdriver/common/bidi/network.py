@@ -6,10 +6,10 @@
 # WebDriver BiDi module: network
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
-from typing import Generator
+from typing import Any
 from dataclasses import dataclass
 
 
@@ -17,318 +17,318 @@ from dataclasses import dataclass
 class AuthChallenge:
     """AuthChallenge type type."""
 
-    scheme: Optional[str] = None
-    realm: Optional[str] = None
+    scheme: str | None = None
+    realm: str | None = None
 
 
 @dataclass
 class AuthCredentials:
     """AuthCredentials type type."""
 
-    type: Optional[Any] = None
-    username: Optional[str] = None
-    password: Optional[str] = None
+    type: Any | None = None
+    username: str | None = None
+    password: str | None = None
 
 
 @dataclass
 class BaseParameters:
     """BaseParameters type type."""
 
-    context: Optional[Any] = None
-    is_blocked: Optional[bool] = None
-    navigation: Optional[Any] = None
-    redirect_count: Optional[Any] = None
-    request: Optional[Any] = None
-    timestamp: Optional[Any] = None
-    intercepts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    context: Any | None = None
+    is_blocked: bool | None = None
+    navigation: Any | None = None
+    redirect_count: Any | None = None
+    request: Any | None = None
+    timestamp: Any | None = None
+    intercepts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class StringValue:
     """StringValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class Base64Value:
     """Base64Value type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class Cookie:
     """Cookie type type."""
 
-    name: Optional[str] = None
-    value: Optional[Any] = None
-    domain: Optional[str] = None
-    path: Optional[str] = None
-    size: Optional[Any] = None
-    http_only: Optional[bool] = None
-    secure: Optional[bool] = None
-    same_site: Optional[Any] = None
-    expiry: Optional[Any] = None
+    name: str | None = None
+    value: Any | None = None
+    domain: str | None = None
+    path: str | None = None
+    size: Any | None = None
+    http_only: bool | None = None
+    secure: bool | None = None
+    same_site: Any | None = None
+    expiry: Any | None = None
 
 
 @dataclass
 class CookieHeader:
     """CookieHeader type type."""
 
-    name: Optional[str] = None
-    value: Optional[Any] = None
+    name: str | None = None
+    value: Any | None = None
 
 
 @dataclass
 class FetchTimingInfo:
     """FetchTimingInfo type type."""
 
-    time_origin: Optional[Any] = None
-    request_time: Optional[Any] = None
-    redirect_start: Optional[Any] = None
-    redirect_end: Optional[Any] = None
-    fetch_start: Optional[Any] = None
-    dns_start: Optional[Any] = None
-    dns_end: Optional[Any] = None
-    connect_start: Optional[Any] = None
-    connect_end: Optional[Any] = None
-    tls_start: Optional[Any] = None
-    request_start: Optional[Any] = None
-    response_start: Optional[Any] = None
-    response_end: Optional[Any] = None
+    time_origin: Any | None = None
+    request_time: Any | None = None
+    redirect_start: Any | None = None
+    redirect_end: Any | None = None
+    fetch_start: Any | None = None
+    dns_start: Any | None = None
+    dns_end: Any | None = None
+    connect_start: Any | None = None
+    connect_end: Any | None = None
+    tls_start: Any | None = None
+    request_start: Any | None = None
+    response_start: Any | None = None
+    response_end: Any | None = None
 
 
 @dataclass
 class Header:
     """Header type type."""
 
-    name: Optional[str] = None
-    value: Optional[Any] = None
+    name: str | None = None
+    value: Any | None = None
 
 
 @dataclass
 class Initiator:
     """Initiator type type."""
 
-    column_number: Optional[Any] = None
-    line_number: Optional[Any] = None
-    request: Optional[Any] = None
-    stack_trace: Optional[Any] = None
-    type: Optional[Any] = None
+    column_number: Any | None = None
+    line_number: Any | None = None
+    request: Any | None = None
+    stack_trace: Any | None = None
+    type: Any | None = None
 
 
 @dataclass
 class ResponseContent:
     """ResponseContent type type."""
 
-    size: Optional[Any] = None
+    size: Any | None = None
 
 
 @dataclass
 class ResponseData:
     """ResponseData type type."""
 
-    url: Optional[str] = None
-    protocol: Optional[str] = None
-    status: Optional[Any] = None
-    status_text: Optional[str] = None
-    from_cache: Optional[bool] = None
-    headers: Optional[List[Optional[Any]]] = field(default_factory=list)
-    mime_type: Optional[str] = None
-    bytes_received: Optional[Any] = None
-    headers_size: Optional[Any] = None
-    body_size: Optional[Any] = None
-    content: Optional[Any] = None
-    auth_challenges: Optional[List[Optional[Any]]] = field(default_factory=list)
+    url: str | None = None
+    protocol: str | None = None
+    status: Any | None = None
+    status_text: str | None = None
+    from_cache: bool | None = None
+    headers: list[Any | None] | None = field(default_factory=list)
+    mime_type: str | None = None
+    bytes_received: Any | None = None
+    headers_size: Any | None = None
+    body_size: Any | None = None
+    content: Any | None = None
+    auth_challenges: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetCookieHeader:
     """SetCookieHeader type type."""
 
-    name: Optional[str] = None
-    value: Optional[Any] = None
-    domain: Optional[str] = None
-    http_only: Optional[bool] = None
-    expiry: Optional[str] = None
-    max_age: Optional[Any] = None
-    path: Optional[str] = None
-    same_site: Optional[Any] = None
-    secure: Optional[bool] = None
+    name: str | None = None
+    value: Any | None = None
+    domain: str | None = None
+    http_only: bool | None = None
+    expiry: str | None = None
+    max_age: Any | None = None
+    path: str | None = None
+    same_site: Any | None = None
+    secure: bool | None = None
 
 
 @dataclass
 class UrlPatternPattern:
     """UrlPatternPattern type type."""
 
-    type: Optional[Any] = None
-    protocol: Optional[str] = None
-    hostname: Optional[str] = None
-    port: Optional[str] = None
-    pathname: Optional[str] = None
-    search: Optional[str] = None
+    type: Any | None = None
+    protocol: str | None = None
+    hostname: str | None = None
+    port: str | None = None
+    pathname: str | None = None
+    search: str | None = None
 
 
 @dataclass
 class UrlPatternString:
     """UrlPatternString type type."""
 
-    type: Optional[Any] = None
-    pattern: Optional[str] = None
+    type: Any | None = None
+    pattern: str | None = None
 
 
 @dataclass
 class AddDataCollectorParameters:
     """AddDataCollectorParameters type type."""
 
-    data_types: Optional[List[Optional[Any]]] = field(default_factory=list)
-    max_encoded_data_size: Optional[Any] = None
-    collector_type: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    data_types: list[Any | None] | None = field(default_factory=list)
+    max_encoded_data_size: Any | None = None
+    collector_type: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class AddDataCollectorResult:
     """AddDataCollectorResult type type."""
 
-    collector: Optional[Any] = None
+    collector: Any | None = None
 
 
 @dataclass
 class AddInterceptParameters:
     """AddInterceptParameters type type."""
 
-    phases: Optional[List[Optional[Any]]] = field(default_factory=list)
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    url_patterns: Optional[List[Optional[Any]]] = field(default_factory=list)
+    phases: list[Any | None] | None = field(default_factory=list)
+    contexts: list[Any | None] | None = field(default_factory=list)
+    url_patterns: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class AddInterceptResult:
     """AddInterceptResult type type."""
 
-    intercept: Optional[Any] = None
+    intercept: Any | None = None
 
 
 @dataclass
 class ContinueResponseParameters:
     """ContinueResponseParameters type type."""
 
-    request: Optional[Any] = None
-    cookies: Optional[List[Optional[Any]]] = field(default_factory=list)
-    credentials: Optional[Any] = None
-    headers: Optional[List[Optional[Any]]] = field(default_factory=list)
-    reason_phrase: Optional[str] = None
-    status_code: Optional[Any] = None
+    request: Any | None = None
+    cookies: list[Any | None] | None = field(default_factory=list)
+    credentials: Any | None = None
+    headers: list[Any | None] | None = field(default_factory=list)
+    reason_phrase: str | None = None
+    status_code: Any | None = None
 
 
 @dataclass
 class ContinueWithAuthParameters:
     """ContinueWithAuthParameters type type."""
 
-    request: Optional[Any] = None
+    request: Any | None = None
 
 
 @dataclass
 class ContinueWithAuthCredentials:
     """ContinueWithAuthCredentials type type."""
 
-    action: Optional[Any] = None
-    credentials: Optional[Any] = None
+    action: Any | None = None
+    credentials: Any | None = None
 
 
 @dataclass
 class ContinueWithAuthNoCredentials:
     """ContinueWithAuthNoCredentials type type."""
 
-    action: Optional[Any] = None
+    action: Any | None = None
 
 
 @dataclass
 class disownDataParameters:
     """disownDataParameters type type."""
 
-    data_type: Optional[Any] = None
-    collector: Optional[Any] = None
-    request: Optional[Any] = None
+    data_type: Any | None = None
+    collector: Any | None = None
+    request: Any | None = None
 
 
 @dataclass
 class FailRequestParameters:
     """FailRequestParameters type type."""
 
-    request: Optional[Any] = None
+    request: Any | None = None
 
 
 @dataclass
 class GetDataParameters:
     """GetDataParameters type type."""
 
-    data_type: Optional[Any] = None
-    collector: Optional[Any] = None
-    disown: Optional[Any] = None
-    request: Optional[Any] = None
+    data_type: Any | None = None
+    collector: Any | None = None
+    disown: Any | None = None
+    request: Any | None = None
 
 
 @dataclass
 class GetDataResult:
     """GetDataResult type type."""
 
-    bytes: Optional[Any] = None
+    bytes: Any | None = None
 
 
 @dataclass
 class ProvideResponseParameters:
     """ProvideResponseParameters type type."""
 
-    request: Optional[Any] = None
-    body: Optional[Any] = None
-    cookies: Optional[List[Optional[Any]]] = field(default_factory=list)
-    headers: Optional[List[Optional[Any]]] = field(default_factory=list)
-    reason_phrase: Optional[str] = None
-    status_code: Optional[Any] = None
+    request: Any | None = None
+    body: Any | None = None
+    cookies: list[Any | None] | None = field(default_factory=list)
+    headers: list[Any | None] | None = field(default_factory=list)
+    reason_phrase: str | None = None
+    status_code: Any | None = None
 
 
 @dataclass
 class RemoveDataCollectorParameters:
     """RemoveDataCollectorParameters type type."""
 
-    collector: Optional[Any] = None
+    collector: Any | None = None
 
 
 @dataclass
 class RemoveInterceptParameters:
     """RemoveInterceptParameters type type."""
 
-    intercept: Optional[Any] = None
+    intercept: Any | None = None
 
 
 @dataclass
 class SetCacheBehaviorParameters:
     """SetCacheBehaviorParameters type type."""
 
-    cache_behavior: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    cache_behavior: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetExtraHeadersParameters:
     """SetExtraHeadersParameters type type."""
 
-    headers: Optional[List[Optional[Any]]] = field(default_factory=list)
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    headers: list[Any | None] | None = field(default_factory=list)
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class ResponseStartedParameters:
     """ResponseStartedParameters type type."""
 
-    response: Optional[Any] = None
+    response: Any | None = None
 
 
 class Network:
@@ -337,7 +337,7 @@ class Network:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def add_data_collector(self, data_types: List[Any] = None, max_encoded_data_size: Any = None, collector_type: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def add_data_collector(self, data_types: list[Any] = None, max_encoded_data_size: Any = None, collector_type: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute network.addDataCollector."""
         params = {
             "dataTypes": data_types,
@@ -349,7 +349,7 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.addDataCollector", params)
 
-    def add_intercept(self, phases: List[Any] = None, contexts: List[Any] = None, url_patterns: List[Any] = None) -> Generator[dict, dict, dict]:
+    def add_intercept(self, phases: list[Any] = None, contexts: list[Any] = None, url_patterns: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute network.addIntercept."""
         params = {
             "phases": phases,
@@ -359,7 +359,7 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.addIntercept", params)
 
-    def continue_request(self, request: Any = None, body: Any = None, cookies: List[Any] = None, headers: List[Any] = None, method: Any = None, url: Any = None) -> Generator[dict, dict, dict]:
+    def continue_request(self, request: Any = None, body: Any = None, cookies: list[Any] = None, headers: list[Any] = None, method: Any = None, url: Any = None) -> Generator[dict, dict, dict]:
         """Execute network.continueRequest."""
         params = {
             "request": request,
@@ -372,7 +372,7 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.continueRequest", params)
 
-    def continue_response(self, request: Any = None, cookies: List[Any] = None, credentials: Any = None, headers: List[Any] = None, reason_phrase: Any = None, status_code: Any = None) -> Generator[dict, dict, dict]:
+    def continue_response(self, request: Any = None, cookies: list[Any] = None, credentials: Any = None, headers: list[Any] = None, reason_phrase: Any = None, status_code: Any = None) -> Generator[dict, dict, dict]:
         """Execute network.continueResponse."""
         params = {
             "request": request,
@@ -422,7 +422,7 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.getData", params)
 
-    def provide_response(self, request: Any = None, body: Any = None, cookies: List[Any] = None, headers: List[Any] = None, reason_phrase: Any = None, status_code: Any = None) -> Generator[dict, dict, dict]:
+    def provide_response(self, request: Any = None, body: Any = None, cookies: list[Any] = None, headers: list[Any] = None, reason_phrase: Any = None, status_code: Any = None) -> Generator[dict, dict, dict]:
         """Execute network.provideResponse."""
         params = {
             "request": request,
@@ -451,7 +451,7 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.removeIntercept", params)
 
-    def set_cache_behavior(self, cache_behavior: Any = None, contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_cache_behavior(self, cache_behavior: Any = None, contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute network.setCacheBehavior."""
         params = {
             "cacheBehavior": cache_behavior,
@@ -460,7 +460,7 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.setCacheBehavior", params)
 
-    def set_extra_headers(self, headers: List[Any] = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_extra_headers(self, headers: list[Any] = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute network.setExtraHeaders."""
         params = {
             "headers": headers,

@@ -6,7 +6,7 @@
 # WebDriver BiDi module: browsingContext
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
 from typing import Generator
@@ -24,304 +24,304 @@ class ReadinessState:
 class Info:
     """Info type type."""
 
-    children: Optional[Any] = None
-    client_window: Optional[Any] = None
-    context: Optional[Any] = None
-    original_opener: Optional[Any] = None
-    url: Optional[str] = None
-    user_context: Optional[Any] = None
-    parent: Optional[Any] = None
+    children: Any | None = None
+    client_window: Any | None = None
+    context: Any | None = None
+    original_opener: Any | None = None
+    url: str | None = None
+    user_context: Any | None = None
+    parent: Any | None = None
 
 
 @dataclass
 class AccessibilityLocator:
     """AccessibilityLocator type type."""
 
-    type: Optional[Any] = None
-    name: Optional[str] = None
-    role: Optional[str] = None
+    type: Any | None = None
+    name: str | None = None
+    role: str | None = None
 
 
 @dataclass
 class CssLocator:
     """CssLocator type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class ContextLocator:
     """ContextLocator type type."""
 
-    type: Optional[Any] = None
-    context: Optional[Any] = None
+    type: Any | None = None
+    context: Any | None = None
 
 
 @dataclass
 class InnerTextLocator:
     """InnerTextLocator type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
-    ignore_case: Optional[bool] = None
-    match_type: Optional[Any] = None
-    max_depth: Optional[Any] = None
+    type: Any | None = None
+    value: str | None = None
+    ignore_case: bool | None = None
+    match_type: Any | None = None
+    max_depth: Any | None = None
 
 
 @dataclass
 class XPathLocator:
     """XPathLocator type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class BaseNavigationInfo:
     """BaseNavigationInfo type type."""
 
-    context: Optional[Any] = None
-    navigation: Optional[Any] = None
-    timestamp: Optional[Any] = None
-    url: Optional[str] = None
+    context: Any | None = None
+    navigation: Any | None = None
+    timestamp: Any | None = None
+    url: str | None = None
 
 
 @dataclass
 class ActivateParameters:
     """ActivateParameters type type."""
 
-    context: Optional[Any] = None
+    context: Any | None = None
 
 
 @dataclass
 class CaptureScreenshotParameters:
     """CaptureScreenshotParameters type type."""
 
-    context: Optional[Any] = None
-    format: Optional[Any] = None
-    clip: Optional[Any] = None
+    context: Any | None = None
+    format: Any | None = None
+    clip: Any | None = None
 
 
 @dataclass
 class ImageFormat:
     """ImageFormat type type."""
 
-    type: Optional[str] = None
-    quality: Optional[Any] = None
+    type: str | None = None
+    quality: Any | None = None
 
 
 @dataclass
 class ElementClipRectangle:
     """ElementClipRectangle type type."""
 
-    type: Optional[Any] = None
-    element: Optional[Any] = None
+    type: Any | None = None
+    element: Any | None = None
 
 
 @dataclass
 class BoxClipRectangle:
     """BoxClipRectangle type type."""
 
-    type: Optional[Any] = None
-    x: Optional[Any] = None
-    y: Optional[Any] = None
-    width: Optional[Any] = None
-    height: Optional[Any] = None
+    type: Any | None = None
+    x: Any | None = None
+    y: Any | None = None
+    width: Any | None = None
+    height: Any | None = None
 
 
 @dataclass
 class CaptureScreenshotResult:
     """CaptureScreenshotResult type type."""
 
-    data: Optional[str] = None
+    data: str | None = None
 
 
 @dataclass
 class CloseParameters:
     """CloseParameters type type."""
 
-    context: Optional[Any] = None
-    prompt_unload: Optional[Any] = None
+    context: Any | None = None
+    prompt_unload: Any | None = None
 
 
 @dataclass
 class CreateParameters:
     """CreateParameters type type."""
 
-    type: Optional[Any] = None
-    reference_context: Optional[Any] = None
-    background: Optional[Any] = None
-    user_context: Optional[Any] = None
+    type: Any | None = None
+    reference_context: Any | None = None
+    background: Any | None = None
+    user_context: Any | None = None
 
 
 @dataclass
 class CreateResult:
     """CreateResult type type."""
 
-    context: Optional[Any] = None
+    context: Any | None = None
 
 
 @dataclass
 class GetTreeParameters:
     """GetTreeParameters type type."""
 
-    max_depth: Optional[Any] = None
-    root: Optional[Any] = None
+    max_depth: Any | None = None
+    root: Any | None = None
 
 
 @dataclass
 class GetTreeResult:
     """GetTreeResult type type."""
 
-    contexts: Optional[Any] = None
+    contexts: Any | None = None
 
 
 @dataclass
 class HandleUserPromptParameters:
     """HandleUserPromptParameters type type."""
 
-    context: Optional[Any] = None
-    accept: Optional[bool] = None
-    user_text: Optional[str] = None
+    context: Any | None = None
+    accept: bool | None = None
+    user_text: str | None = None
 
 
 @dataclass
 class LocateNodesParameters:
     """LocateNodesParameters type type."""
 
-    context: Optional[Any] = None
-    locator: Optional[Any] = None
-    serialization_options: Optional[Any] = None
-    start_nodes: Optional[List[Optional[Any]]] = field(default_factory=list)
+    context: Any | None = None
+    locator: Any | None = None
+    serialization_options: Any | None = None
+    start_nodes: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class LocateNodesResult:
     """LocateNodesResult type type."""
 
-    nodes: Optional[List[Optional[Any]]] = field(default_factory=list)
+    nodes: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class NavigateParameters:
     """NavigateParameters type type."""
 
-    context: Optional[Any] = None
-    url: Optional[str] = None
-    wait: Optional[Any] = None
+    context: Any | None = None
+    url: str | None = None
+    wait: Any | None = None
 
 
 @dataclass
 class NavigateResult:
     """NavigateResult type type."""
 
-    navigation: Optional[Any] = None
-    url: Optional[str] = None
+    navigation: Any | None = None
+    url: str | None = None
 
 
 @dataclass
 class PrintParameters:
     """PrintParameters type type."""
 
-    context: Optional[Any] = None
-    background: Optional[Any] = None
-    margin: Optional[Any] = None
-    page: Optional[Any] = None
-    shrink_to_fit: Optional[Any] = None
+    context: Any | None = None
+    background: Any | None = None
+    margin: Any | None = None
+    page: Any | None = None
+    shrink_to_fit: Any | None = None
 
 
 @dataclass
 class PrintResult:
     """PrintResult type type."""
 
-    data: Optional[str] = None
+    data: str | None = None
 
 
 @dataclass
 class ReloadParameters:
     """ReloadParameters type type."""
 
-    context: Optional[Any] = None
-    ignore_cache: Optional[bool] = None
-    wait: Optional[Any] = None
+    context: Any | None = None
+    ignore_cache: bool | None = None
+    wait: Any | None = None
 
 
 @dataclass
 class SetViewportParameters:
     """SetViewportParameters type type."""
 
-    context: Optional[Any] = None
-    viewport: Optional[Any] = None
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    context: Any | None = None
+    viewport: Any | None = None
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class Viewport:
     """Viewport type type."""
 
-    width: Optional[Any] = None
-    height: Optional[Any] = None
+    width: Any | None = None
+    height: Any | None = None
 
 
 @dataclass
 class TraverseHistoryParameters:
     """TraverseHistoryParameters type type."""
 
-    context: Optional[Any] = None
-    delta: Optional[Any] = None
+    context: Any | None = None
+    delta: Any | None = None
 
 
 @dataclass
 class HistoryUpdatedParameters:
     """HistoryUpdatedParameters type type."""
 
-    context: Optional[Any] = None
-    timestamp: Optional[Any] = None
-    url: Optional[str] = None
+    context: Any | None = None
+    timestamp: Any | None = None
+    url: str | None = None
 
 
 @dataclass
 class DownloadWillBeginParams:
     """DownloadWillBeginParams type type."""
 
-    suggested_filename: Optional[str] = None
+    suggested_filename: str | None = None
 
 
 @dataclass
 class DownloadCanceledParams:
     """DownloadCanceledParams type type."""
 
-    status: Optional[Any] = None
+    status: Any | None = None
 
 
 @dataclass
 class DownloadCompleteParams:
     """DownloadCompleteParams type type."""
 
-    status: Optional[Any] = None
-    filepath: Optional[Any] = None
+    status: Any | None = None
+    filepath: Any | None = None
 
 
 @dataclass
 class UserPromptClosedParameters:
     """UserPromptClosedParameters type type."""
 
-    context: Optional[Any] = None
-    accepted: Optional[bool] = None
-    type: Optional[Any] = None
-    user_text: Optional[str] = None
+    context: Any | None = None
+    accepted: bool | None = None
+    type: Any | None = None
+    user_text: str | None = None
 
 
 @dataclass
 class UserPromptOpenedParameters:
     """UserPromptOpenedParameters type type."""
 
-    context: Optional[Any] = None
-    handler: Optional[Any] = None
-    message: Optional[str] = None
-    type: Optional[Any] = None
-    default_value: Optional[str] = None
+    context: Any | None = None
+    handler: Any | None = None
+    message: str | None = None
+    type: Any | None = None
+    default_value: str | None = None
 
 
 class BrowsingContext:
@@ -330,7 +330,7 @@ class BrowsingContext:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def activate(self, context: Any = None):
+    def activate(self, context: Any | None = None):
         """Execute browsingContext.activate."""
         params = {
             "context": context,
@@ -340,7 +340,10 @@ class BrowsingContext:
         return self._driver.execute(cmd)
 
     def capture_screenshot(
-        self, context: Any = None, format: Any = None, clip: Any = None
+        self,
+        context: Any | None = None,
+        format: Any | None = None,
+        clip: Any | None = None,
     ):
         """Execute browsingContext.captureScreenshot."""
         params = {
@@ -352,9 +355,7 @@ class BrowsingContext:
         cmd = command_builder("browsingContext.captureScreenshot", params)
         return self._driver.execute(cmd)
 
-    def close(
-        self, context: Any = None, prompt_unload: Any = None
-    ):
+    def close(self, context: Any | None = None, prompt_unload: Any | None = None):
         """Execute browsingContext.close."""
         params = {
             "context": context,
@@ -366,10 +367,10 @@ class BrowsingContext:
 
     def create(
         self,
-        type: Any = None,
-        reference_context: Any = None,
-        background: Any = None,
-        user_context: Any = None,
+        type: Any | None = None,
+        reference_context: Any | None = None,
+        background: Any | None = None,
+        user_context: Any | None = None,
     ):
         """Execute browsingContext.create and return the context info."""
         params = {
@@ -383,9 +384,7 @@ class BrowsingContext:
         result = self._driver.execute(cmd)
         return result.get("context") if "context" in result else result
 
-    def get_tree(
-        self, max_depth: Any = None, root: Any = None
-    ):
+    def get_tree(self, max_depth: Any | None = None, root: Any | None = None):
         """Execute browsingContext.getTree."""
         params = {
             "maxDepth": max_depth,
@@ -396,7 +395,10 @@ class BrowsingContext:
         return self._driver.execute(cmd)
 
     def handle_user_prompt(
-        self, context: Any = None, accept: bool = None, user_text: Any = None
+        self,
+        context: Any | None = None,
+        accept: bool | None = None,
+        user_text: Any | None = None,
     ):
         """Execute browsingContext.handleUserPrompt."""
         params = {
@@ -410,10 +412,10 @@ class BrowsingContext:
 
     def locate_nodes(
         self,
-        context: Any = None,
-        locator: Any = None,
-        serialization_options: Any = None,
-        start_nodes: List[Any] = None,
+        context: Any | None = None,
+        locator: Any | None = None,
+        serialization_options: Any | None = None,
+        start_nodes: list[Any] = None,
     ):
         """Execute browsingContext.locateNodes."""
         params = {
@@ -427,7 +429,10 @@ class BrowsingContext:
         return self._driver.execute(cmd)
 
     def navigate(
-        self, context: Any = None, url: Any = None, wait: Any = None
+        self,
+        context: Any | None = None,
+        url: Any | None = None,
+        wait: Any | None = None,
     ):
         """Execute browsingContext.navigate."""
         params = {
@@ -441,11 +446,11 @@ class BrowsingContext:
 
     def print(
         self,
-        context: Any = None,
-        background: Any = None,
-        margin: Any = None,
-        page: Any = None,
-        shrink_to_fit: Any = None,
+        context: Any | None = None,
+        background: Any | None = None,
+        margin: Any | None = None,
+        page: Any | None = None,
+        shrink_to_fit: Any | None = None,
     ):
         """Execute browsingContext.print."""
         params = {
@@ -460,7 +465,10 @@ class BrowsingContext:
         return self._driver.execute(cmd)
 
     def reload(
-        self, context: Any = None, ignore_cache: bool = None, wait: Any = None
+        self,
+        context: Any | None = None,
+        ignore_cache: bool | None = None,
+        wait: Any | None = None,
     ):
         """Execute browsingContext.reload."""
         params = {
@@ -473,7 +481,10 @@ class BrowsingContext:
         return self._driver.execute(cmd)
 
     def set_viewport(
-        self, context: Any = None, viewport: Any = None, user_contexts: List[Any] = None
+        self,
+        context: Any | None = None,
+        viewport: Any | None = None,
+        user_contexts: list[Any] = None,
     ):
         """Execute browsingContext.setViewport."""
         params = {
@@ -485,9 +496,7 @@ class BrowsingContext:
         cmd = command_builder("browsingContext.setViewport", params)
         return self._driver.execute(cmd)
 
-    def traverse_history(
-        self, context: Any = None, delta: Any = None
-    ):
+    def traverse_history(self, context: Any | None = None, delta: Any | None = None):
         """Execute browsingContext.traverseHistory."""
         params = {
             "context": context,
@@ -499,13 +508,13 @@ class BrowsingContext:
 
     def context_created(
         self,
-        children: Any = None,
-        client_window: Any = None,
-        context: Any = None,
-        original_opener: Any = None,
-        url: Any = None,
-        user_context: Any = None,
-        parent: Any = None,
+        children: Any | None = None,
+        client_window: Any | None = None,
+        context: Any | None = None,
+        original_opener: Any | None = None,
+        url: Any | None = None,
+        user_context: Any | None = None,
+        parent: Any | None = None,
     ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.contextCreated."""
         params = {
@@ -522,13 +531,13 @@ class BrowsingContext:
 
     def context_destroyed(
         self,
-        children: Any = None,
-        client_window: Any = None,
-        context: Any = None,
-        original_opener: Any = None,
-        url: Any = None,
-        user_context: Any = None,
-        parent: Any = None,
+        children: Any | None = None,
+        client_window: Any | None = None,
+        context: Any | None = None,
+        original_opener: Any | None = None,
+        url: Any | None = None,
+        user_context: Any | None = None,
+        parent: Any | None = None,
     ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.contextDestroyed."""
         params = {
@@ -556,7 +565,10 @@ class BrowsingContext:
         return command_builder("browsingContext.fragmentNavigated", params)
 
     def history_updated(
-        self, context: Any = None, timestamp: Any = None, url: Any = None
+        self,
+        context: Any | None = None,
+        timestamp: Any | None = None,
+        url: Any | None = None,
     ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.historyUpdated."""
         params = {
@@ -580,7 +592,7 @@ class BrowsingContext:
         return command_builder("browsingContext.load", params)
 
     def download_will_begin(
-        self, suggested_filename: Any = None
+        self, suggested_filename: Any | None = None
     ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.downloadWillBegin."""
         params = {
@@ -615,10 +627,10 @@ class BrowsingContext:
 
     def user_prompt_closed(
         self,
-        context: Any = None,
-        accepted: bool = None,
-        type: Any = None,
-        user_text: Any = None,
+        context: Any | None = None,
+        accepted: bool | None = None,
+        type: Any | None = None,
+        user_text: Any | None = None,
     ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.userPromptClosed."""
         params = {
@@ -632,11 +644,11 @@ class BrowsingContext:
 
     def user_prompt_opened(
         self,
-        context: Any = None,
-        handler: Any = None,
-        message: Any = None,
-        type: Any = None,
-        default_value: Any = None,
+        context: Any | None = None,
+        handler: Any | None = None,
+        message: Any | None = None,
+        type: Any | None = None,
+        default_value: Any | None = None,
     ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.userPromptOpened."""
         params = {

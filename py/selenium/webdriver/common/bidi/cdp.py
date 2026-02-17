@@ -32,7 +32,7 @@ from collections import defaultdict
 from collections.abc import AsyncGenerator, AsyncIterator, Generator
 from contextlib import asynccontextmanager, contextmanager
 from dataclasses import dataclass
-from typing import Any, TypeVar
+from typing import Any
 
 import trio
 from trio_websocket import ConnectionClosed as WsConnectionClosed

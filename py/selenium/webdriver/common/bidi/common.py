@@ -15,45 +15,49 @@
 # specific language governing permissions and limitations
 # under the License.
 
+from __future__ import annotations
+
 from collections.abc import Generator
 from dataclasses import asdict, is_dataclass
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 
 def serialize_obj(obj: Any) -> Any:
     """Recursively serialize dataclass objects and complex types to JSON-serializable dicts.
-    
+
     Args:
         obj: The object to serialize.
-        
+
     Returns:
         A JSON-serializable version of the object.
     """
     if obj is None:
         return None
-    
+
     # Handle Path objects
     if isinstance(obj, Path):
         return str(obj)
-    
+
     # Handle dataclass instances
     if is_dataclass(obj) and not isinstance(obj, type):
         return {k: serialize_obj(v) for k, v in asdict(obj).items()}
-    
+
     # Handle dictionaries recursively
     if isinstance(obj, dict):
         return {k: serialize_obj(v) for k, v in obj.items()}
-    
+
     # Handle lists recursively
     if isinstance(obj, (list, tuple)):
         return [serialize_obj(i) for i in obj]
-    
+
     # Return primitive types as-is
     return obj
 
 
-def command_builder(method: str, params: Optional[dict] = None) -> Generator[dict, dict, dict]:
+def command_builder(
+    method: str, params: dict | None = None
+) -> Generator[dict, dict, dict]:
     """Build a command iterator to send to the BiDi protocol.
 
     Args:
@@ -65,7 +69,7 @@ def command_builder(method: str, params: Optional[dict] = None) -> Generator[dic
     """
     if params is None:
         params = {}
-    
+
     # Serialize any dataclass objects in params
     params = serialize_obj(params)
 

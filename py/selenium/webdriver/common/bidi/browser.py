@@ -6,7 +6,7 @@
 # WebDriver BiDi module: browser
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
 from typing import Generator
@@ -28,13 +28,13 @@ class ClientWindowState:
 class ClientWindowInfo:
     """ClientWindowInfo type type."""
 
-    active: Optional[bool] = None
-    client_window: Optional[Any] = None
-    height: Optional[Any] = None
-    state: Optional[Any] = None
-    width: Optional[Any] = None
-    x: Optional[Any] = None
-    y: Optional[Any] = None
+    active: bool | None = None
+    client_window: Any | None = None
+    height: Any | None = None
+    state: Any | None = None
+    width: Any | None = None
+    x: Any | None = None
+    y: Any | None = None
 
     def get_client_window(self):
         """Get the client window ID."""
@@ -69,85 +69,85 @@ class ClientWindowInfo:
 class UserContextInfo:
     """UserContextInfo type type."""
 
-    user_context: Optional[Any] = None
+    user_context: Any | None = None
 
 
 @dataclass
 class CreateUserContextParameters:
     """CreateUserContextParameters type type."""
 
-    accept_insecure_certs: Optional[bool] = None
-    proxy: Optional[Any] = None
-    unhandled_prompt_behavior: Optional[Any] = None
+    accept_insecure_certs: bool | None = None
+    proxy: Any | None = None
+    unhandled_prompt_behavior: Any | None = None
 
 
 @dataclass
 class GetClientWindowsResult:
     """GetClientWindowsResult type type."""
 
-    client_windows: Optional[List[Optional[Any]]] = field(default_factory=list)
+    client_windows: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class GetUserContextsResult:
     """GetUserContextsResult type type."""
 
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class RemoveUserContextParameters:
     """RemoveUserContextParameters type type."""
 
-    user_context: Optional[Any] = None
+    user_context: Any | None = None
 
 
 @dataclass
 class SetClientWindowStateParameters:
     """SetClientWindowStateParameters type type."""
 
-    client_window: Optional[Any] = None
+    client_window: Any | None = None
 
 
 @dataclass
 class ClientWindowNamedState:
     """ClientWindowNamedState type type."""
 
-    state: Optional[Any] = None
+    state: Any | None = None
 
 
 @dataclass
 class ClientWindowRectState:
     """ClientWindowRectState type type."""
 
-    state: Optional[Any] = None
-    width: Optional[Any] = None
-    height: Optional[Any] = None
-    x: Optional[Any] = None
-    y: Optional[Any] = None
+    state: Any | None = None
+    width: Any | None = None
+    height: Any | None = None
+    x: Any | None = None
+    y: Any | None = None
 
 
 @dataclass
 class SetDownloadBehaviorParameters:
     """SetDownloadBehaviorParameters type type."""
 
-    download_behavior: Optional[Any] = None
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    download_behavior: Any | None = None
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class DownloadBehaviorAllowed:
     """DownloadBehaviorAllowed type type."""
 
-    type: Optional[Any] = None
-    destination_folder: Optional[str] = None
+    type: Any | None = None
+    destination_folder: str | None = None
 
 
 @dataclass
 class DownloadBehaviorDenied:
     """DownloadBehaviorDenied type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 class Browser:
@@ -165,9 +165,9 @@ class Browser:
 
     def create_user_context(
         self,
-        accept_insecure_certs: bool = None,
-        proxy: Any = None,
-        unhandled_prompt_behavior: Any = None,
+        accept_insecure_certs: bool | None = None,
+        proxy: Any | None = None,
+        unhandled_prompt_behavior: Any | None = None,
     ):
         """Execute browser.createUserContext and return the user context ID."""
         # Serialize Proxy object if needed
@@ -228,7 +228,7 @@ class Browser:
             ]
         return []
 
-    def remove_user_context(self, user_context: Any = None):
+    def remove_user_context(self, user_context: Any | None = None):
         """Execute browser.removeUserContext."""
         params = {
             "userContext": user_context,
@@ -237,7 +237,7 @@ class Browser:
         cmd = command_builder("browser.removeUserContext", params)
         return self._driver.execute(cmd)
 
-    def set_client_window_state(self, client_window: Any = None):
+    def set_client_window_state(self, client_window: Any | None = None):
         """Execute browser.setClientWindowState."""
         params = {
             "clientWindow": client_window,
@@ -250,7 +250,7 @@ class Browser:
         self,
         allowed: bool | None = None,
         destination_folder: str | None = None,
-        user_contexts: List[Any] | None = None,
+        user_contexts: list[Any] | None = None,
     ):
         """Execute browser.setDownloadBehavior."""
         # Validate parameters

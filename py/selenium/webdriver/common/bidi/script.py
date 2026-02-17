@@ -6,10 +6,10 @@
 # WebDriver BiDi module: script
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
-from typing import Generator
+from typing import Any
 from dataclasses import dataclass
 
 
@@ -17,569 +17,569 @@ from dataclasses import dataclass
 class ChannelValue:
     """ChannelValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class ChannelProperties:
     """ChannelProperties type type."""
 
-    channel: Optional[Any] = None
-    serialization_options: Optional[Any] = None
-    ownership: Optional[Any] = None
+    channel: Any | None = None
+    serialization_options: Any | None = None
+    ownership: Any | None = None
 
 
 @dataclass
 class EvaluateResultSuccess:
     """EvaluateResultSuccess type type."""
 
-    type: Optional[Any] = None
-    result: Optional[Any] = None
-    realm: Optional[Any] = None
+    type: Any | None = None
+    result: Any | None = None
+    realm: Any | None = None
 
 
 @dataclass
 class EvaluateResultException:
     """EvaluateResultException type type."""
 
-    type: Optional[Any] = None
-    exception_details: Optional[Any] = None
-    realm: Optional[Any] = None
+    type: Any | None = None
+    exception_details: Any | None = None
+    realm: Any | None = None
 
 
 @dataclass
 class ExceptionDetails:
     """ExceptionDetails type type."""
 
-    column_number: Optional[Any] = None
-    exception: Optional[Any] = None
-    line_number: Optional[Any] = None
-    stack_trace: Optional[Any] = None
-    text: Optional[str] = None
+    column_number: Any | None = None
+    exception: Any | None = None
+    line_number: Any | None = None
+    stack_trace: Any | None = None
+    text: str | None = None
 
 
 @dataclass
 class ArrayLocalValue:
     """ArrayLocalValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class DateLocalValue:
     """DateLocalValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class MapLocalValue:
     """MapLocalValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class ObjectLocalValue:
     """ObjectLocalValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class RegExpValue:
     """RegExpValue type type."""
 
-    pattern: Optional[str] = None
-    flags: Optional[str] = None
+    pattern: str | None = None
+    flags: str | None = None
 
 
 @dataclass
 class RegExpLocalValue:
     """RegExpLocalValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class SetLocalValue:
     """SetLocalValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class UndefinedValue:
     """UndefinedValue type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class NullValue:
     """NullValue type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class StringValue:
     """StringValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class NumberValue:
     """NumberValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class BooleanValue:
     """BooleanValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[bool] = None
+    type: Any | None = None
+    value: bool | None = None
 
 
 @dataclass
 class BigIntValue:
     """BigIntValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[str] = None
+    type: Any | None = None
+    value: str | None = None
 
 
 @dataclass
 class BaseRealmInfo:
     """BaseRealmInfo type type."""
 
-    realm: Optional[Any] = None
-    origin: Optional[str] = None
+    realm: Any | None = None
+    origin: str | None = None
 
 
 @dataclass
 class WindowRealmInfo:
     """WindowRealmInfo type type."""
 
-    type: Optional[Any] = None
-    context: Optional[Any] = None
-    sandbox: Optional[str] = None
+    type: Any | None = None
+    context: Any | None = None
+    sandbox: str | None = None
 
 
 @dataclass
 class DedicatedWorkerRealmInfo:
     """DedicatedWorkerRealmInfo type type."""
 
-    type: Optional[Any] = None
-    owners: Optional[List[Optional[Any]]] = field(default_factory=list)
+    type: Any | None = None
+    owners: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SharedWorkerRealmInfo:
     """SharedWorkerRealmInfo type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class ServiceWorkerRealmInfo:
     """ServiceWorkerRealmInfo type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class WorkerRealmInfo:
     """WorkerRealmInfo type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class PaintWorkletRealmInfo:
     """PaintWorkletRealmInfo type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class AudioWorkletRealmInfo:
     """AudioWorkletRealmInfo type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class WorkletRealmInfo:
     """WorkletRealmInfo type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class SharedReference:
     """SharedReference type type."""
 
-    shared_id: Optional[Any] = None
-    handle: Optional[Any] = None
+    shared_id: Any | None = None
+    handle: Any | None = None
 
 
 @dataclass
 class RemoteObjectReference:
     """RemoteObjectReference type type."""
 
-    handle: Optional[Any] = None
-    shared_id: Optional[Any] = None
+    handle: Any | None = None
+    shared_id: Any | None = None
 
 
 @dataclass
 class SymbolRemoteValue:
     """SymbolRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class ArrayRemoteValue:
     """ArrayRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class ObjectRemoteValue:
     """ObjectRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class FunctionRemoteValue:
     """FunctionRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class RegExpRemoteValue:
     """RegExpRemoteValue type type."""
 
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class DateRemoteValue:
     """DateRemoteValue type type."""
 
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class MapRemoteValue:
     """MapRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class SetRemoteValue:
     """SetRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class WeakMapRemoteValue:
     """WeakMapRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class WeakSetRemoteValue:
     """WeakSetRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class GeneratorRemoteValue:
     """GeneratorRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class ErrorRemoteValue:
     """ErrorRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class ProxyRemoteValue:
     """ProxyRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class PromiseRemoteValue:
     """PromiseRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class TypedArrayRemoteValue:
     """TypedArrayRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class ArrayBufferRemoteValue:
     """ArrayBufferRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class NodeListRemoteValue:
     """NodeListRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class HTMLCollectionRemoteValue:
     """HTMLCollectionRemoteValue type type."""
 
-    type: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class NodeRemoteValue:
     """NodeRemoteValue type type."""
 
-    type: Optional[Any] = None
-    shared_id: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
-    value: Optional[Any] = None
+    type: Any | None = None
+    shared_id: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
+    value: Any | None = None
 
 
 @dataclass
 class NodeProperties:
     """NodeProperties type type."""
 
-    node_type: Optional[Any] = None
-    child_node_count: Optional[Any] = None
-    children: Optional[List[Optional[Any]]] = field(default_factory=list)
-    local_name: Optional[str] = None
-    mode: Optional[Any] = None
-    namespace_uri: Optional[str] = None
-    node_value: Optional[str] = None
-    shadow_root: Optional[Any] = None
+    node_type: Any | None = None
+    child_node_count: Any | None = None
+    children: list[Any | None] | None = field(default_factory=list)
+    local_name: str | None = None
+    mode: Any | None = None
+    namespace_uri: str | None = None
+    node_value: str | None = None
+    shadow_root: Any | None = None
 
 
 @dataclass
 class WindowProxyRemoteValue:
     """WindowProxyRemoteValue type type."""
 
-    type: Optional[Any] = None
-    value: Optional[Any] = None
-    handle: Optional[Any] = None
-    internal_id: Optional[Any] = None
+    type: Any | None = None
+    value: Any | None = None
+    handle: Any | None = None
+    internal_id: Any | None = None
 
 
 @dataclass
 class WindowProxyProperties:
     """WindowProxyProperties type type."""
 
-    context: Optional[Any] = None
+    context: Any | None = None
 
 
 @dataclass
 class StackFrame:
     """StackFrame type type."""
 
-    column_number: Optional[Any] = None
-    function_name: Optional[str] = None
-    line_number: Optional[Any] = None
-    url: Optional[str] = None
+    column_number: Any | None = None
+    function_name: str | None = None
+    line_number: Any | None = None
+    url: str | None = None
 
 
 @dataclass
 class StackTrace:
     """StackTrace type type."""
 
-    call_frames: Optional[List[Optional[Any]]] = field(default_factory=list)
+    call_frames: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class Source:
     """Source type type."""
 
-    realm: Optional[Any] = None
-    context: Optional[Any] = None
+    realm: Any | None = None
+    context: Any | None = None
 
 
 @dataclass
 class RealmTarget:
     """RealmTarget type type."""
 
-    realm: Optional[Any] = None
+    realm: Any | None = None
 
 
 @dataclass
 class ContextTarget:
     """ContextTarget type type."""
 
-    context: Optional[Any] = None
-    sandbox: Optional[str] = None
+    context: Any | None = None
+    sandbox: str | None = None
 
 
 @dataclass
 class AddPreloadScriptParameters:
     """AddPreloadScriptParameters type type."""
 
-    function_declaration: Optional[str] = None
-    arguments: Optional[List[Optional[Any]]] = field(default_factory=list)
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    sandbox: Optional[str] = None
+    function_declaration: str | None = None
+    arguments: list[Any | None] | None = field(default_factory=list)
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
+    sandbox: str | None = None
 
 
 @dataclass
 class AddPreloadScriptResult:
     """AddPreloadScriptResult type type."""
 
-    script: Optional[Any] = None
+    script: Any | None = None
 
 
 @dataclass
 class DisownParameters:
     """DisownParameters type type."""
 
-    handles: Optional[List[Optional[Any]]] = field(default_factory=list)
-    target: Optional[Any] = None
+    handles: list[Any | None] | None = field(default_factory=list)
+    target: Any | None = None
 
 
 @dataclass
 class CallFunctionParameters:
     """CallFunctionParameters type type."""
 
-    function_declaration: Optional[str] = None
-    await_promise: Optional[bool] = None
-    target: Optional[Any] = None
-    arguments: Optional[List[Optional[Any]]] = field(default_factory=list)
-    result_ownership: Optional[Any] = None
-    serialization_options: Optional[Any] = None
-    this: Optional[Any] = None
-    user_activation: Optional[Any] = None
+    function_declaration: str | None = None
+    await_promise: bool | None = None
+    target: Any | None = None
+    arguments: list[Any | None] | None = field(default_factory=list)
+    result_ownership: Any | None = None
+    serialization_options: Any | None = None
+    this: Any | None = None
+    user_activation: Any | None = None
 
 
 @dataclass
 class EvaluateParameters:
     """EvaluateParameters type type."""
 
-    expression: Optional[str] = None
-    target: Optional[Any] = None
-    await_promise: Optional[bool] = None
-    result_ownership: Optional[Any] = None
-    serialization_options: Optional[Any] = None
-    user_activation: Optional[Any] = None
+    expression: str | None = None
+    target: Any | None = None
+    await_promise: bool | None = None
+    result_ownership: Any | None = None
+    serialization_options: Any | None = None
+    user_activation: Any | None = None
 
 
 @dataclass
 class GetRealmsParameters:
     """GetRealmsParameters type type."""
 
-    context: Optional[Any] = None
-    type: Optional[Any] = None
+    context: Any | None = None
+    type: Any | None = None
 
 
 @dataclass
 class GetRealmsResult:
     """GetRealmsResult type type."""
 
-    realms: Optional[List[Optional[Any]]] = field(default_factory=list)
+    realms: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class RemovePreloadScriptParameters:
     """RemovePreloadScriptParameters type type."""
 
-    script: Optional[Any] = None
+    script: Any | None = None
 
 
 @dataclass
 class MessageParameters:
     """MessageParameters type type."""
 
-    channel: Optional[Any] = None
-    data: Optional[Any] = None
-    source: Optional[Any] = None
+    channel: Any | None = None
+    data: Any | None = None
+    source: Any | None = None
 
 
 @dataclass
 class RealmDestroyedParameters:
     """RealmDestroyedParameters type type."""
 
-    realm: Optional[Any] = None
+    realm: Any | None = None
 
 
 class Script:
@@ -588,7 +588,7 @@ class Script:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def add_preload_script(self, function_declaration: Any = None, arguments: List[Any] = None, contexts: List[Any] = None, user_contexts: List[Any] = None, sandbox: Any = None) -> Generator[dict, dict, dict]:
+    def add_preload_script(self, function_declaration: Any = None, arguments: list[Any] = None, contexts: list[Any] = None, user_contexts: list[Any] = None, sandbox: Any = None) -> Generator[dict, dict, dict]:
         """Execute script.addPreloadScript."""
         params = {
             "functionDeclaration": function_declaration,
@@ -600,7 +600,7 @@ class Script:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.addPreloadScript", params)
 
-    def disown(self, handles: List[Any] = None, target: Any = None) -> Generator[dict, dict, dict]:
+    def disown(self, handles: list[Any] = None, target: Any = None) -> Generator[dict, dict, dict]:
         """Execute script.disown."""
         params = {
             "handles": handles,
@@ -609,7 +609,7 @@ class Script:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.disown", params)
 
-    def call_function(self, function_declaration: Any = None, await_promise: bool = None, target: Any = None, arguments: List[Any] = None, result_ownership: Any = None, serialization_options: Any = None, this: Any = None, user_activation: Any = None) -> Generator[dict, dict, dict]:
+    def call_function(self, function_declaration: Any = None, await_promise: bool = None, target: Any = None, arguments: list[Any] = None, result_ownership: Any = None, serialization_options: Any = None, this: Any = None, user_activation: Any = None) -> Generator[dict, dict, dict]:
         """Execute script.callFunction."""
         params = {
             "functionDeclaration": function_declaration,

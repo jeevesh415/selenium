@@ -6,10 +6,10 @@
 # WebDriver BiDi module: storage
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
-from typing import Generator
+from typing import Any
 from dataclasses import dataclass
 
 
@@ -17,100 +17,100 @@ from dataclasses import dataclass
 class PartitionKey:
     """PartitionKey type type."""
 
-    user_context: Optional[str] = None
-    source_origin: Optional[str] = None
+    user_context: str | None = None
+    source_origin: str | None = None
 
 
 @dataclass
 class CookieFilter:
     """CookieFilter type type."""
 
-    name: Optional[str] = None
-    value: Optional[Any] = None
-    domain: Optional[str] = None
-    path: Optional[str] = None
-    size: Optional[Any] = None
-    http_only: Optional[bool] = None
-    secure: Optional[bool] = None
-    same_site: Optional[Any] = None
-    expiry: Optional[Any] = None
+    name: str | None = None
+    value: Any | None = None
+    domain: str | None = None
+    path: str | None = None
+    size: Any | None = None
+    http_only: bool | None = None
+    secure: bool | None = None
+    same_site: Any | None = None
+    expiry: Any | None = None
 
 
 @dataclass
 class BrowsingContextPartitionDescriptor:
     """BrowsingContextPartitionDescriptor type type."""
 
-    type: Optional[Any] = None
-    context: Optional[Any] = None
+    type: Any | None = None
+    context: Any | None = None
 
 
 @dataclass
 class StorageKeyPartitionDescriptor:
     """StorageKeyPartitionDescriptor type type."""
 
-    type: Optional[Any] = None
-    user_context: Optional[str] = None
-    source_origin: Optional[str] = None
+    type: Any | None = None
+    user_context: str | None = None
+    source_origin: str | None = None
 
 
 @dataclass
 class GetCookiesParameters:
     """GetCookiesParameters type type."""
 
-    filter: Optional[Any] = None
-    partition: Optional[Any] = None
+    filter: Any | None = None
+    partition: Any | None = None
 
 
 @dataclass
 class GetCookiesResult:
     """GetCookiesResult type type."""
 
-    cookies: Optional[List[Optional[Any]]] = field(default_factory=list)
-    partition_key: Optional[Any] = None
+    cookies: list[Any | None] | None = field(default_factory=list)
+    partition_key: Any | None = None
 
 
 @dataclass
 class PartialCookie:
     """PartialCookie type type."""
 
-    name: Optional[str] = None
-    value: Optional[Any] = None
-    domain: Optional[str] = None
-    path: Optional[str] = None
-    http_only: Optional[bool] = None
-    secure: Optional[bool] = None
-    same_site: Optional[Any] = None
-    expiry: Optional[Any] = None
+    name: str | None = None
+    value: Any | None = None
+    domain: str | None = None
+    path: str | None = None
+    http_only: bool | None = None
+    secure: bool | None = None
+    same_site: Any | None = None
+    expiry: Any | None = None
 
 
 @dataclass
 class SetCookieParameters:
     """SetCookieParameters type type."""
 
-    cookie: Optional[Any] = None
-    partition: Optional[Any] = None
+    cookie: Any | None = None
+    partition: Any | None = None
 
 
 @dataclass
 class SetCookieResult:
     """SetCookieResult type type."""
 
-    partition_key: Optional[Any] = None
+    partition_key: Any | None = None
 
 
 @dataclass
 class DeleteCookiesParameters:
     """DeleteCookiesParameters type type."""
 
-    filter: Optional[Any] = None
-    partition: Optional[Any] = None
+    filter: Any | None = None
+    partition: Any | None = None
 
 
 @dataclass
 class DeleteCookiesResult:
     """DeleteCookiesResult type type."""
 
-    partition_key: Optional[Any] = None
+    partition_key: Any | None = None
 
 
 class Storage:

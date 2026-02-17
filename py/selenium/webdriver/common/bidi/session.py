@@ -6,10 +6,10 @@
 # WebDriver BiDi module: session
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
-from typing import Generator
+from typing import Any
 from dataclasses import dataclass
 
 
@@ -32,140 +32,140 @@ class UserPromptHandler:
 class CapabilitiesRequest:
     """CapabilitiesRequest type type."""
 
-    always_match: Optional[Any] = None
-    first_match: Optional[List[Optional[Any]]] = field(default_factory=list)
+    always_match: Any | None = None
+    first_match: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class CapabilityRequest:
     """CapabilityRequest type type."""
 
-    accept_insecure_certs: Optional[bool] = None
-    browser_name: Optional[str] = None
-    browser_version: Optional[str] = None
-    platform_name: Optional[str] = None
-    proxy: Optional[Any] = None
-    unhandled_prompt_behavior: Optional[Any] = None
+    accept_insecure_certs: bool | None = None
+    browser_name: str | None = None
+    browser_version: str | None = None
+    platform_name: str | None = None
+    proxy: Any | None = None
+    unhandled_prompt_behavior: Any | None = None
 
 
 @dataclass
 class AutodetectProxyConfiguration:
     """AutodetectProxyConfiguration type type."""
 
-    proxy_type: Optional[Any] = None
+    proxy_type: Any | None = None
 
 
 @dataclass
 class DirectProxyConfiguration:
     """DirectProxyConfiguration type type."""
 
-    proxy_type: Optional[Any] = None
+    proxy_type: Any | None = None
 
 
 @dataclass
 class ManualProxyConfiguration:
     """ManualProxyConfiguration type type."""
 
-    proxy_type: Optional[Any] = None
-    http_proxy: Optional[str] = None
-    ssl_proxy: Optional[str] = None
-    no_proxy: Optional[List[Optional[Any]]] = field(default_factory=list)
+    proxy_type: Any | None = None
+    http_proxy: str | None = None
+    ssl_proxy: str | None = None
+    no_proxy: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SocksProxyConfiguration:
     """SocksProxyConfiguration type type."""
 
-    socks_proxy: Optional[str] = None
-    socks_version: Optional[Any] = None
+    socks_proxy: str | None = None
+    socks_version: Any | None = None
 
 
 @dataclass
 class PacProxyConfiguration:
     """PacProxyConfiguration type type."""
 
-    proxy_type: Optional[Any] = None
-    proxy_autoconfig_url: Optional[str] = None
+    proxy_type: Any | None = None
+    proxy_autoconfig_url: str | None = None
 
 
 @dataclass
 class SystemProxyConfiguration:
     """SystemProxyConfiguration type type."""
 
-    proxy_type: Optional[Any] = None
+    proxy_type: Any | None = None
 
 
 @dataclass
 class UserPromptHandler:
     """UserPromptHandler type type."""
 
-    alert: Optional[Any] = None
-    before_unload: Optional[Any] = None
-    confirm: Optional[Any] = None
-    default: Optional[Any] = None
-    file: Optional[Any] = None
-    prompt: Optional[Any] = None
+    alert: Any | None = None
+    before_unload: Any | None = None
+    confirm: Any | None = None
+    default: Any | None = None
+    file: Any | None = None
+    prompt: Any | None = None
 
 
 @dataclass
 class SubscribeParameters:
     """SubscribeParameters type type."""
 
-    events: Optional[List[Optional[str]]] = field(default_factory=list)
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    events: list[str | None] | None = field(default_factory=list)
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class UnsubscribeByIDRequest:
     """UnsubscribeByIDRequest type type."""
 
-    subscriptions: Optional[List[Optional[Any]]] = field(default_factory=list)
+    subscriptions: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class UnsubscribeByAttributesRequest:
     """UnsubscribeByAttributesRequest type type."""
 
-    events: Optional[List[Optional[str]]] = field(default_factory=list)
+    events: list[str | None] | None = field(default_factory=list)
 
 
 @dataclass
 class StatusResult:
     """StatusResult type type."""
 
-    ready: Optional[bool] = None
-    message: Optional[str] = None
+    ready: bool | None = None
+    message: str | None = None
 
 
 @dataclass
 class NewParameters:
     """NewParameters type type."""
 
-    capabilities: Optional[Any] = None
+    capabilities: Any | None = None
 
 
 @dataclass
 class NewResult:
     """NewResult type type."""
 
-    session_id: Optional[str] = None
-    accept_insecure_certs: Optional[bool] = None
-    browser_name: Optional[str] = None
-    browser_version: Optional[str] = None
-    platform_name: Optional[str] = None
-    set_window_rect: Optional[bool] = None
-    user_agent: Optional[str] = None
-    proxy: Optional[Any] = None
-    unhandled_prompt_behavior: Optional[Any] = None
-    web_socket_url: Optional[str] = None
+    session_id: str | None = None
+    accept_insecure_certs: bool | None = None
+    browser_name: str | None = None
+    browser_version: str | None = None
+    platform_name: str | None = None
+    set_window_rect: bool | None = None
+    user_agent: str | None = None
+    proxy: Any | None = None
+    unhandled_prompt_behavior: Any | None = None
+    web_socket_url: str | None = None
 
 
 @dataclass
 class SubscribeResult:
     """SubscribeResult type type."""
 
-    subscription: Optional[Any] = None
+    subscription: Any | None = None
 
 
 class Session:
@@ -196,9 +196,9 @@ class Session:
 
     def subscribe(
         self,
-        events: List[Any] = None,
-        contexts: List[Any] = None,
-        user_contexts: List[Any] = None,
+        events: list[Any] = None,
+        contexts: list[Any] = None,
+        user_contexts: list[Any] = None,
     ) -> Generator[dict, dict, dict]:
         """Execute session.subscribe."""
         params = {

@@ -6,10 +6,10 @@
 # WebDriver BiDi module: emulation
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from .common import command_builder
 from dataclasses import field
-from typing import Generator
+from typing import Any
 from dataclasses import dataclass
 
 
@@ -17,145 +17,145 @@ from dataclasses import dataclass
 class SetForcedColorsModeThemeOverrideParameters:
     """SetForcedColorsModeThemeOverrideParameters type type."""
 
-    theme: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    theme: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetGeolocationOverrideParameters:
     """SetGeolocationOverrideParameters type type."""
 
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class GeolocationCoordinates:
     """GeolocationCoordinates type type."""
 
-    latitude: Optional[Any] = None
-    longitude: Optional[Any] = None
-    altitude: Optional[Any] = None
+    latitude: Any | None = None
+    longitude: Any | None = None
+    altitude: Any | None = None
 
 
 @dataclass
 class GeolocationPositionError:
     """GeolocationPositionError type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class SetLocaleOverrideParameters:
     """SetLocaleOverrideParameters type type."""
 
-    locale: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    locale: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class setNetworkConditionsParameters:
     """setNetworkConditionsParameters type type."""
 
-    network_conditions: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    network_conditions: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class NetworkConditionsOffline:
     """NetworkConditionsOffline type type."""
 
-    type: Optional[Any] = None
+    type: Any | None = None
 
 
 @dataclass
 class ScreenArea:
     """ScreenArea type type."""
 
-    width: Optional[Any] = None
-    height: Optional[Any] = None
+    width: Any | None = None
+    height: Any | None = None
 
 
 @dataclass
 class SetScreenSettingsOverrideParameters:
     """SetScreenSettingsOverrideParameters type type."""
 
-    screen_area: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    screen_area: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class ScreenOrientation:
     """ScreenOrientation type type."""
 
-    natural: Optional[Any] = None
-    type: Optional[Any] = None
+    natural: Any | None = None
+    type: Any | None = None
 
 
 @dataclass
 class SetScreenOrientationOverrideParameters:
     """SetScreenOrientationOverrideParameters type type."""
 
-    screen_orientation: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    screen_orientation: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetUserAgentOverrideParameters:
     """SetUserAgentOverrideParameters type type."""
 
-    user_agent: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    user_agent: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetViewportMetaOverrideParameters:
     """SetViewportMetaOverrideParameters type type."""
 
-    viewport_meta: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    viewport_meta: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetScriptingEnabledParameters:
     """SetScriptingEnabledParameters type type."""
 
-    enabled: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    enabled: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetScrollbarTypeOverrideParameters:
     """SetScrollbarTypeOverrideParameters type type."""
 
-    scrollbar_type: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    scrollbar_type: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetTimezoneOverrideParameters:
     """SetTimezoneOverrideParameters type type."""
 
-    timezone: Optional[Any] = None
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    timezone: Any | None = None
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 @dataclass
 class SetTouchOverrideParameters:
     """SetTouchOverrideParameters type type."""
 
-    contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
-    user_contexts: Optional[List[Optional[Any]]] = field(default_factory=list)
+    contexts: list[Any | None] | None = field(default_factory=list)
+    user_contexts: list[Any | None] | None = field(default_factory=list)
 
 
 class Emulation:
@@ -164,7 +164,7 @@ class Emulation:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def set_forced_colors_mode_theme_override(self, theme: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_forced_colors_mode_theme_override(self, theme: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setForcedColorsModeThemeOverride."""
         params = {
             "theme": theme,
@@ -174,7 +174,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setForcedColorsModeThemeOverride", params)
 
-    def set_geolocation_override(self, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_geolocation_override(self, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setGeolocationOverride."""
         params = {
             "contexts": contexts,
@@ -183,7 +183,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setGeolocationOverride", params)
 
-    def set_locale_override(self, locale: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_locale_override(self, locale: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setLocaleOverride."""
         params = {
             "locale": locale,
@@ -193,7 +193,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setLocaleOverride", params)
 
-    def set_network_conditions(self, network_conditions: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_network_conditions(self, network_conditions: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setNetworkConditions."""
         params = {
             "networkConditions": network_conditions,
@@ -203,7 +203,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setNetworkConditions", params)
 
-    def set_screen_settings_override(self, screen_area: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_screen_settings_override(self, screen_area: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setScreenSettingsOverride."""
         params = {
             "screenArea": screen_area,
@@ -213,7 +213,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setScreenSettingsOverride", params)
 
-    def set_screen_orientation_override(self, screen_orientation: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_screen_orientation_override(self, screen_orientation: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setScreenOrientationOverride."""
         params = {
             "screenOrientation": screen_orientation,
@@ -223,7 +223,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setScreenOrientationOverride", params)
 
-    def set_user_agent_override(self, user_agent: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_user_agent_override(self, user_agent: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setUserAgentOverride."""
         params = {
             "userAgent": user_agent,
@@ -233,7 +233,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setUserAgentOverride", params)
 
-    def set_viewport_meta_override(self, viewport_meta: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_viewport_meta_override(self, viewport_meta: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setViewportMetaOverride."""
         params = {
             "viewportMeta": viewport_meta,
@@ -243,7 +243,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setViewportMetaOverride", params)
 
-    def set_scripting_enabled(self, enabled: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_scripting_enabled(self, enabled: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setScriptingEnabled."""
         params = {
             "enabled": enabled,
@@ -253,7 +253,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setScriptingEnabled", params)
 
-    def set_scrollbar_type_override(self, scrollbar_type: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_scrollbar_type_override(self, scrollbar_type: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setScrollbarTypeOverride."""
         params = {
             "scrollbarType": scrollbar_type,
@@ -263,7 +263,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setScrollbarTypeOverride", params)
 
-    def set_timezone_override(self, timezone: Any = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_timezone_override(self, timezone: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setTimezoneOverride."""
         params = {
             "timezone": timezone,
@@ -273,7 +273,7 @@ class Emulation:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("emulation.setTimezoneOverride", params)
 
-    def set_touch_override(self, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_touch_override(self, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
         """Execute emulation.setTouchOverride."""
         params = {
             "contexts": contexts,
