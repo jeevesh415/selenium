@@ -24,7 +24,9 @@ class LogEntryAdded:
     event_class = "log.entryAdded"
 
     @classmethod
-    def from_json(cls, json: dict[str, Any]) -> ConsoleLogEntry | JavaScriptLogEntry | None:
+    def from_json(
+        cls, json: dict[str, Any]
+    ) -> ConsoleLogEntry | JavaScriptLogEntry | None:
         if json["type"] == "console":
             return ConsoleLogEntry.from_json(json)
         elif json["type"] == "javascript":
@@ -79,3 +81,10 @@ class LogLevel:
     INFO = "info"
     WARN = "warn"
     ERROR = "error"
+
+
+class Log:
+    """WebDriver BiDi log module."""
+
+    def __init__(self, driver) -> None:
+        self._driver = driver

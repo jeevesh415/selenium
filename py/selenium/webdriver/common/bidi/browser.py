@@ -13,6 +13,17 @@ from typing import Generator
 from dataclasses import dataclass
 
 
+class ClientWindowState:
+    """ClientWindowState enum."""
+
+    ACTIVE = "active"
+    BACKGROUND = "background"
+    FULLSCREEN = "fullscreen"
+    MAXIMIZED = "maximized"
+    MINIMIZED = "minimized"
+    NORMAL = "normal"
+
+
 @dataclass
 class ClientWindowInfo:
     """ClientWindowInfo type type."""
@@ -117,59 +128,99 @@ class Browser:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def close(self) -> Generator[dict, dict, dict]:
+    def close(self):
         """Execute browser.close."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browser.close", params)
+        cmd = command_builder("browser.close", params)
+        return self._driver.execute(cmd)
 
-    def create_user_context(self, accept_insecure_certs: bool = None, proxy: Any = None, unhandled_prompt_behavior: Any = None) -> Generator[dict, dict, dict]:
-        """Execute browser.createUserContext."""
+    def create_user_context(
+        self,
+        accept_insecure_certs: bool = None,
+        proxy: Any = None,
+        unhandled_prompt_behavior: Any = None,
+    ):
+        """Execute browser.createUserContext and return the user context ID."""
         params = {
             "acceptInsecureCerts": accept_insecure_certs,
             "proxy": proxy,
             "unhandledPromptBehavior": unhandled_prompt_behavior,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browser.createUserContext", params)
+        cmd = command_builder("browser.createUserContext", params)
+        result = self._driver.execute(cmd)
+        return result.get("userContext") if "userContext" in result else result
 
-    def get_client_windows(self) -> Generator[dict, dict, dict]:
-        """Execute browser.getClientWindows."""
-        params = {
-        }
+    def get_client_windows(self):
+        """Execute browser.getClientWindows and return the client windows."""
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browser.getClientWindows", params)
+        cmd = command_builder("browser.getClientWindows", params)
+        result = self._driver.execute(cmd)
+        return result.get("clientWindows", []) if result else []
 
-    def get_user_contexts(self) -> Generator[dict, dict, dict]:
-        """Execute browser.getUserContexts."""
-        params = {
-        }
+    def get_user_contexts(self):
+        """Execute browser.getUserContexts and return the user contexts."""
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browser.getUserContexts", params)
+        cmd = command_builder("browser.getUserContexts", params)
+        result = self._driver.execute(cmd)
+        return result.get("userContexts", []) if result else []
 
-    def remove_user_context(self, user_context: Any = None) -> Generator[dict, dict, dict]:
+    def remove_user_context(self, user_context: Any = None):
         """Execute browser.removeUserContext."""
         params = {
             "userContext": user_context,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browser.removeUserContext", params)
+        cmd = command_builder("browser.removeUserContext", params)
+        return self._driver.execute(cmd)
 
-    def set_client_window_state(self, client_window: Any = None) -> Generator[dict, dict, dict]:
+    def set_client_window_state(self, client_window: Any = None):
         """Execute browser.setClientWindowState."""
         params = {
             "clientWindow": client_window,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browser.setClientWindowState", params)
+        cmd = command_builder("browser.setClientWindowState", params)
+        return self._driver.execute(cmd)
 
-    def set_download_behavior(self, download_behavior: Any = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_download_behavior(
+        self,
+        allowed: bool | None = None,
+        destination_folder: str | None = None,
+        user_contexts: List[Any] | None = None,
+    ):
         """Execute browser.setDownloadBehavior."""
+        # Validate parameters
+        if allowed is True and not destination_folder:
+            raise ValueError("destination_folder is required when allowed=True")
+        if allowed is False and destination_folder:
+            raise ValueError(
+                "destination_folder should not be provided when allowed=False"
+            )
+
+        # Build download_behavior object
+        download_behavior = None
+        if allowed is True:
+            download_behavior = {
+                "type": "allow",
+                "destinationFolder": destination_folder,
+            }
+        elif allowed is False:
+            download_behavior = {
+                "type": "deny",
+            }
+        elif allowed is None:
+            download_behavior = {
+                "type": "allow",
+            }
+
         params = {
             "downloadBehavior": download_behavior,
             "userContexts": user_contexts,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browser.setDownloadBehavior", params)
-
+        cmd = command_builder("browser.setDownloadBehavior", params)
+        return self._driver.execute(cmd)

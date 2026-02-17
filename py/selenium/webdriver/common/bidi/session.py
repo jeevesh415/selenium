@@ -13,6 +13,21 @@ from typing import Generator
 from dataclasses import dataclass
 
 
+class UserPromptHandlerType:
+    """UserPromptHandlerType enum."""
+
+    DISMISS = "dismiss"
+    ACCEPT = "accept"
+    REPORT_JAVASCRIPT_ERROR = "report-javascript-error"
+    REPORT_ERROR = "report-error"
+
+
+class UserPromptHandler:
+    """UserPromptHandler type."""
+
+    pass
+
+
 @dataclass
 class CapabilitiesRequest:
     """CapabilitiesRequest type type."""
@@ -161,8 +176,7 @@ class Session:
 
     def status(self) -> Generator[dict, dict, dict]:
         """Execute session.status."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("session.status", params)
 
@@ -176,12 +190,16 @@ class Session:
 
     def end(self) -> Generator[dict, dict, dict]:
         """Execute session.end."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("session.end", params)
 
-    def subscribe(self, events: List[Any] = None, contexts: List[Any] = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def subscribe(
+        self,
+        events: List[Any] = None,
+        contexts: List[Any] = None,
+        user_contexts: List[Any] = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute session.subscribe."""
         params = {
             "events": events,
@@ -193,8 +211,6 @@ class Session:
 
     def unsubscribe(self) -> Generator[dict, dict, dict]:
         """Execute session.unsubscribe."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("session.unsubscribe", params)
-

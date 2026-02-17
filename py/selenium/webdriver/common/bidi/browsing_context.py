@@ -13,6 +13,13 @@ from typing import Generator
 from dataclasses import dataclass
 
 
+class ReadinessState:
+    """ReadinessState enum."""
+
+    INTERACTIVE = "interactive"
+    COMPLETE = "complete"
+
+
 @dataclass
 class Info:
     """Info type type."""
@@ -331,7 +338,9 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.activate", params)
 
-    def capture_screenshot(self, context: Any = None, format: Any = None, clip: Any = None) -> Generator[dict, dict, dict]:
+    def capture_screenshot(
+        self, context: Any = None, format: Any = None, clip: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.captureScreenshot."""
         params = {
             "context": context,
@@ -341,7 +350,9 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.captureScreenshot", params)
 
-    def close(self, context: Any = None, prompt_unload: Any = None) -> Generator[dict, dict, dict]:
+    def close(
+        self, context: Any = None, prompt_unload: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.close."""
         params = {
             "context": context,
@@ -350,7 +361,13 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.close", params)
 
-    def create(self, type: Any = None, reference_context: Any = None, background: Any = None, user_context: Any = None) -> Generator[dict, dict, dict]:
+    def create(
+        self,
+        type: Any = None,
+        reference_context: Any = None,
+        background: Any = None,
+        user_context: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.create."""
         params = {
             "type": type,
@@ -361,7 +378,9 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.create", params)
 
-    def get_tree(self, max_depth: Any = None, root: Any = None) -> Generator[dict, dict, dict]:
+    def get_tree(
+        self, max_depth: Any = None, root: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.getTree."""
         params = {
             "maxDepth": max_depth,
@@ -370,7 +389,9 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.getTree", params)
 
-    def handle_user_prompt(self, context: Any = None, accept: bool = None, user_text: Any = None) -> Generator[dict, dict, dict]:
+    def handle_user_prompt(
+        self, context: Any = None, accept: bool = None, user_text: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.handleUserPrompt."""
         params = {
             "context": context,
@@ -380,7 +401,13 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.handleUserPrompt", params)
 
-    def locate_nodes(self, context: Any = None, locator: Any = None, serialization_options: Any = None, start_nodes: List[Any] = None) -> Generator[dict, dict, dict]:
+    def locate_nodes(
+        self,
+        context: Any = None,
+        locator: Any = None,
+        serialization_options: Any = None,
+        start_nodes: List[Any] = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.locateNodes."""
         params = {
             "context": context,
@@ -391,7 +418,9 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.locateNodes", params)
 
-    def navigate(self, context: Any = None, url: Any = None, wait: Any = None) -> Generator[dict, dict, dict]:
+    def navigate(
+        self, context: Any = None, url: Any = None, wait: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.navigate."""
         params = {
             "context": context,
@@ -401,7 +430,14 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.navigate", params)
 
-    def print(self, context: Any = None, background: Any = None, margin: Any = None, page: Any = None, shrink_to_fit: Any = None) -> Generator[dict, dict, dict]:
+    def print(
+        self,
+        context: Any = None,
+        background: Any = None,
+        margin: Any = None,
+        page: Any = None,
+        shrink_to_fit: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.print."""
         params = {
             "context": context,
@@ -413,7 +449,9 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.print", params)
 
-    def reload(self, context: Any = None, ignore_cache: bool = None, wait: Any = None) -> Generator[dict, dict, dict]:
+    def reload(
+        self, context: Any = None, ignore_cache: bool = None, wait: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.reload."""
         params = {
             "context": context,
@@ -423,7 +461,9 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.reload", params)
 
-    def set_viewport(self, context: Any = None, viewport: Any = None, user_contexts: List[Any] = None) -> Generator[dict, dict, dict]:
+    def set_viewport(
+        self, context: Any = None, viewport: Any = None, user_contexts: List[Any] = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.setViewport."""
         params = {
             "context": context,
@@ -433,7 +473,9 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.setViewport", params)
 
-    def traverse_history(self, context: Any = None, delta: Any = None) -> Generator[dict, dict, dict]:
+    def traverse_history(
+        self, context: Any = None, delta: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.traverseHistory."""
         params = {
             "context": context,
@@ -442,7 +484,16 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.traverseHistory", params)
 
-    def context_created(self, children: Any = None, client_window: Any = None, context: Any = None, original_opener: Any = None, url: Any = None, user_context: Any = None, parent: Any = None) -> Generator[dict, dict, dict]:
+    def context_created(
+        self,
+        children: Any = None,
+        client_window: Any = None,
+        context: Any = None,
+        original_opener: Any = None,
+        url: Any = None,
+        user_context: Any = None,
+        parent: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.contextCreated."""
         params = {
             "children": children,
@@ -456,7 +507,16 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.contextCreated", params)
 
-    def context_destroyed(self, children: Any = None, client_window: Any = None, context: Any = None, original_opener: Any = None, url: Any = None, user_context: Any = None, parent: Any = None) -> Generator[dict, dict, dict]:
+    def context_destroyed(
+        self,
+        children: Any = None,
+        client_window: Any = None,
+        context: Any = None,
+        original_opener: Any = None,
+        url: Any = None,
+        user_context: Any = None,
+        parent: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.contextDestroyed."""
         params = {
             "children": children,
@@ -472,19 +532,19 @@ class BrowsingContext:
 
     def navigation_started(self) -> Generator[dict, dict, dict]:
         """Execute browsingContext.navigationStarted."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.navigationStarted", params)
 
     def fragment_navigated(self) -> Generator[dict, dict, dict]:
         """Execute browsingContext.fragmentNavigated."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.fragmentNavigated", params)
 
-    def history_updated(self, context: Any = None, timestamp: Any = None, url: Any = None) -> Generator[dict, dict, dict]:
+    def history_updated(
+        self, context: Any = None, timestamp: Any = None, url: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.historyUpdated."""
         params = {
             "context": context,
@@ -496,19 +556,19 @@ class BrowsingContext:
 
     def dom_content_loaded(self) -> Generator[dict, dict, dict]:
         """Execute browsingContext.domContentLoaded."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.domContentLoaded", params)
 
     def load(self) -> Generator[dict, dict, dict]:
         """Execute browsingContext.load."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.load", params)
 
-    def download_will_begin(self, suggested_filename: Any = None) -> Generator[dict, dict, dict]:
+    def download_will_begin(
+        self, suggested_filename: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.downloadWillBegin."""
         params = {
             "suggestedFilename": suggested_filename,
@@ -518,33 +578,35 @@ class BrowsingContext:
 
     def download_end(self) -> Generator[dict, dict, dict]:
         """Execute browsingContext.downloadEnd."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.downloadEnd", params)
 
     def navigation_aborted(self) -> Generator[dict, dict, dict]:
         """Execute browsingContext.navigationAborted."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.navigationAborted", params)
 
     def navigation_committed(self) -> Generator[dict, dict, dict]:
         """Execute browsingContext.navigationCommitted."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.navigationCommitted", params)
 
     def navigation_failed(self) -> Generator[dict, dict, dict]:
         """Execute browsingContext.navigationFailed."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.navigationFailed", params)
 
-    def user_prompt_closed(self, context: Any = None, accepted: bool = None, type: Any = None, user_text: Any = None) -> Generator[dict, dict, dict]:
+    def user_prompt_closed(
+        self,
+        context: Any = None,
+        accepted: bool = None,
+        type: Any = None,
+        user_text: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.userPromptClosed."""
         params = {
             "context": context,
@@ -555,7 +617,14 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.userPromptClosed", params)
 
-    def user_prompt_opened(self, context: Any = None, handler: Any = None, message: Any = None, type: Any = None, default_value: Any = None) -> Generator[dict, dict, dict]:
+    def user_prompt_opened(
+        self,
+        context: Any = None,
+        handler: Any = None,
+        message: Any = None,
+        type: Any = None,
+        default_value: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute browsingContext.userPromptOpened."""
         params = {
             "context": context,
@@ -566,4 +635,3 @@ class BrowsingContext:
         }
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("browsingContext.userPromptOpened", params)
-
