@@ -778,28 +778,13 @@ BROWSER_TESTS = {
     ]
 ]
 
-# BiDi baseline tests (hand-written modules baseline for Phase 6 integration validation)
-py_test_suite(
+# BiDi baseline tests - DEPRECATED: Use test-chrome-bidi instead
+# This target is maintained for backwards compatibility only
+# TODO: Remove in next major version
+test_suite(
     name = "test-bidi-baseline",
-    size = "large",
-    srcs = BIDI_TESTS + glob([
-        "test/selenium/webdriver/support/**/*.py",
-    ]),
-    args = [
-        "--instafail",
-        "--bidi",
-        "--browser=chrome",
-    ],
-    data = BROWSERS["chrome"]["data"],
-    env_inherit = ["DISPLAY"],
-    tags = ["no-sandbox"] + BROWSERS["chrome"]["tags"],
-    deps = [
-        ":chrome",
-        ":common",
-        ":init-tree",
-        ":support",
-        ":webserver",
-    ] + TEST_DEPS,
+    tags = ["manual"],
+    tests = [":test-chrome-bidi"],
 )
 
 test_suite(

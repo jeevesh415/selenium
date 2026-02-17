@@ -16,6 +16,7 @@
 # under the License.
 
 
+from typing import Union, Optional
 from selenium.webdriver.common.bidi.common import command_builder
 
 
@@ -45,10 +46,10 @@ class Permissions:
 
     def set_permission(
         self,
-        descriptor: str | PermissionDescriptor,
+        descriptor: Union[str, PermissionDescriptor],
         state: str,
         origin: str,
-        user_context: str | None = None,
+        user_context: Optional[str] = None,
     ) -> None:
         """Sets a permission state for a given permission descriptor.
 
