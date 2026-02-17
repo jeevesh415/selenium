@@ -20,6 +20,7 @@
 import base64
 import contextlib
 import copy
+import inspect
 import os
 import pkgutil
 import tempfile
@@ -426,12 +427,19 @@ class WebDriver(BaseWebDriver):
         """Sends a command to be executed by a command.CommandExecutor.
 
         Args:
-            driver_command: The name of the command to execute as a string.
+            driver_command: The name of the command to execute as a string. Can also be a generator
+                for BiDi protocol commands.
             params: A dictionary of named parameters to send with the command.
 
         Returns:
             The command's JSON response loaded into a dictionary object.
         """
+        # Handle BiDi generator commands
+        if inspect.isgenerator(driver_command):
+            # BiDi command: use WebSocketConnection directly
+            return self.command_executor.execute(driver_command)
+        
+        # Legacy WebDriver command: handle normally
         params = self._wrap_value(params)
 
         if self.session_id:

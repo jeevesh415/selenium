@@ -778,14 +778,6 @@ BROWSER_TESTS = {
     ]
 ]
 
-# BiDi baseline tests - DEPRECATED: Use test-chrome-bidi instead
-# This target is maintained for backwards compatibility only
-# TODO: Remove in next major version
-test_suite(
-    name = "test-bidi-baseline",
-    tags = ["manual"],
-    tests = [":test-chrome-bidi"],
-)
 
 test_suite(
     name = "test-remote",

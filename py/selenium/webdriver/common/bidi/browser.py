@@ -36,6 +36,34 @@ class ClientWindowInfo:
     x: Optional[Any] = None
     y: Optional[Any] = None
 
+    def get_client_window(self):
+        """Get the client window ID."""
+        return self.client_window
+
+    def get_state(self):
+        """Get the client window state."""
+        return self.state
+
+    def get_width(self):
+        """Get the client window width."""
+        return self.width
+
+    def get_height(self):
+        """Get the client window height."""
+        return self.height
+
+    def is_active(self):
+        """Check if the client window is active."""
+        return self.active
+
+    def get_x(self):
+        """Get the client window X position."""
+        return self.x
+
+    def get_y(self):
+        """Get the client window Y position."""
+        return self.y
+
 
 @dataclass
 class UserContextInfo:
@@ -142,6 +170,11 @@ class Browser:
         unhandled_prompt_behavior: Any = None,
     ):
         """Execute browser.createUserContext and return the user context ID."""
+        # Serialize Proxy object if needed
+        if proxy and hasattr(proxy, "to_bidi_dict"):
+            # It's a Proxy object, use its BiDi serialization method
+            proxy = proxy.to_bidi_dict()
+
         params = {
             "acceptInsecureCerts": accept_insecure_certs,
             "proxy": proxy,
@@ -153,20 +186,47 @@ class Browser:
         return result.get("userContext") if "userContext" in result else result
 
     def get_client_windows(self):
-        """Execute browser.getClientWindows and return the client windows."""
+        """Execute browser.getClientWindows and return the client windows as ClientWindowInfo objects."""
         params = {}
         params = {k: v for k, v in params.items() if v is not None}
         cmd = command_builder("browser.getClientWindows", params)
         result = self._driver.execute(cmd)
-        return result.get("clientWindows", []) if result else []
+        if result and "clientWindows" in result:
+            windows = result.get("clientWindows", [])
+            # Deserialize dicts to ClientWindowInfo objects
+            return [
+                (
+                    ClientWindowInfo(
+                        active=w.get("active"),
+                        client_window=w.get("clientWindow"),
+                        height=w.get("height"),
+                        state=w.get("state"),
+                        width=w.get("width"),
+                        x=w.get("x"),
+                        y=w.get("y"),
+                    )
+                    if isinstance(w, dict)
+                    else w
+                )
+                for w in windows
+            ]
+        return []
 
     def get_user_contexts(self):
-        """Execute browser.getUserContexts and return the user contexts."""
+        """Execute browser.getUserContexts and return the user context IDs."""
         params = {}
         params = {k: v for k, v in params.items() if v is not None}
         cmd = command_builder("browser.getUserContexts", params)
         result = self._driver.execute(cmd)
-        return result.get("userContexts", []) if result else []
+        if result and "userContexts" in result:
+            # Extract just the userContext ID strings from the list of dicts
+            user_contexts_list = result.get("userContexts", [])
+            return [
+                uc.get("userContext")
+                for uc in user_contexts_list
+                if isinstance(uc, dict)
+            ]
+        return []
 
     def remove_user_context(self, user_context: Any = None):
         """Execute browser.removeUserContext."""

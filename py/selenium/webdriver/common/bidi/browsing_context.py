@@ -330,17 +330,18 @@ class BrowsingContext:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def activate(self, context: Any = None) -> Generator[dict, dict, dict]:
+    def activate(self, context: Any = None):
         """Execute browsingContext.activate."""
         params = {
             "context": context,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.activate", params)
+        cmd = command_builder("browsingContext.activate", params)
+        return self._driver.execute(cmd)
 
     def capture_screenshot(
         self, context: Any = None, format: Any = None, clip: Any = None
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.captureScreenshot."""
         params = {
             "context": context,
@@ -348,18 +349,20 @@ class BrowsingContext:
             "clip": clip,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.captureScreenshot", params)
+        cmd = command_builder("browsingContext.captureScreenshot", params)
+        return self._driver.execute(cmd)
 
     def close(
         self, context: Any = None, prompt_unload: Any = None
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.close."""
         params = {
             "context": context,
             "promptUnload": prompt_unload,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.close", params)
+        cmd = command_builder("browsingContext.close", params)
+        return self._driver.execute(cmd)
 
     def create(
         self,
@@ -367,8 +370,8 @@ class BrowsingContext:
         reference_context: Any = None,
         background: Any = None,
         user_context: Any = None,
-    ) -> Generator[dict, dict, dict]:
-        """Execute browsingContext.create."""
+    ):
+        """Execute browsingContext.create and return the context info."""
         params = {
             "type": type,
             "referenceContext": reference_context,
@@ -376,22 +379,25 @@ class BrowsingContext:
             "userContext": user_context,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.create", params)
+        cmd = command_builder("browsingContext.create", params)
+        result = self._driver.execute(cmd)
+        return result.get("context") if "context" in result else result
 
     def get_tree(
         self, max_depth: Any = None, root: Any = None
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.getTree."""
         params = {
             "maxDepth": max_depth,
             "root": root,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.getTree", params)
+        cmd = command_builder("browsingContext.getTree", params)
+        return self._driver.execute(cmd)
 
     def handle_user_prompt(
         self, context: Any = None, accept: bool = None, user_text: Any = None
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.handleUserPrompt."""
         params = {
             "context": context,
@@ -399,7 +405,8 @@ class BrowsingContext:
             "userText": user_text,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.handleUserPrompt", params)
+        cmd = command_builder("browsingContext.handleUserPrompt", params)
+        return self._driver.execute(cmd)
 
     def locate_nodes(
         self,
@@ -407,7 +414,7 @@ class BrowsingContext:
         locator: Any = None,
         serialization_options: Any = None,
         start_nodes: List[Any] = None,
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.locateNodes."""
         params = {
             "context": context,
@@ -416,11 +423,12 @@ class BrowsingContext:
             "startNodes": start_nodes,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.locateNodes", params)
+        cmd = command_builder("browsingContext.locateNodes", params)
+        return self._driver.execute(cmd)
 
     def navigate(
         self, context: Any = None, url: Any = None, wait: Any = None
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.navigate."""
         params = {
             "context": context,
@@ -428,7 +436,8 @@ class BrowsingContext:
             "wait": wait,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.navigate", params)
+        cmd = command_builder("browsingContext.navigate", params)
+        return self._driver.execute(cmd)
 
     def print(
         self,
@@ -437,7 +446,7 @@ class BrowsingContext:
         margin: Any = None,
         page: Any = None,
         shrink_to_fit: Any = None,
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.print."""
         params = {
             "context": context,
@@ -447,11 +456,12 @@ class BrowsingContext:
             "shrinkToFit": shrink_to_fit,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.print", params)
+        cmd = command_builder("browsingContext.print", params)
+        return self._driver.execute(cmd)
 
     def reload(
         self, context: Any = None, ignore_cache: bool = None, wait: Any = None
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.reload."""
         params = {
             "context": context,
@@ -459,11 +469,12 @@ class BrowsingContext:
             "wait": wait,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.reload", params)
+        cmd = command_builder("browsingContext.reload", params)
+        return self._driver.execute(cmd)
 
     def set_viewport(
         self, context: Any = None, viewport: Any = None, user_contexts: List[Any] = None
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.setViewport."""
         params = {
             "context": context,
@@ -471,18 +482,20 @@ class BrowsingContext:
             "userContexts": user_contexts,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.setViewport", params)
+        cmd = command_builder("browsingContext.setViewport", params)
+        return self._driver.execute(cmd)
 
     def traverse_history(
         self, context: Any = None, delta: Any = None
-    ) -> Generator[dict, dict, dict]:
+    ):
         """Execute browsingContext.traverseHistory."""
         params = {
             "context": context,
             "delta": delta,
         }
         params = {k: v for k, v in params.items() if v is not None}
-        return command_builder("browsingContext.traverseHistory", params)
+        cmd = command_builder("browsingContext.traverseHistory", params)
+        return self._driver.execute(cmd)
 
     def context_created(
         self,
