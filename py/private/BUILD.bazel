@@ -1,5 +1,9 @@
 load("@rules_python//python:defs.bzl", "py_binary")
 
+exports_files([
+    "bidi_enhancements_manifest.py",
+])
+
 py_binary(
     name = "untar",
     srcs = [

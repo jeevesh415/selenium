@@ -594,6 +594,7 @@ py_binary(
 generate_bidi(
     name = "create-bidi-src",
     cddl_file = "//common/bidi/spec:all.cddl",
+    enhancements_manifest = "//py/private:bidi_enhancements_manifest.py",
     generator = ":generate_bidi",
     module_name = "selenium/webdriver/common/bidi",
     spec_version = "1.0",

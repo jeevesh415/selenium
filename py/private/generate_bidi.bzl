@@ -4,6 +4,7 @@ def _generate_bidi_impl(ctx):
     """Implementation of the generate_bidi rule."""
 
     cddl_file = ctx.file.cddl_file
+    manifest_file = ctx.file.enhancements_manifest
     generator = ctx.executable.generator
     output_dir = ctx.attr.module_name
     spec_version = ctx.attr.spec_version
@@ -43,8 +44,14 @@ def _generate_bidi_impl(ctx):
         spec_version,
     ]
 
+    # Add enhancement manifest if provided
+    inputs = [cddl_file]
+    if manifest_file:
+        args.extend(["--enhancements-manifest", manifest_file.path])
+        inputs.append(manifest_file)
+
     ctx.actions.run(
-        inputs = [cddl_file],
+        inputs = inputs,
         outputs = outputs,
         executable = generator,
         arguments = args,
@@ -61,6 +68,11 @@ generate_bidi = rule(
             allow_single_file = [".cddl"],
             mandatory = True,
             doc = "CDDL specification file",
+        ),
+        "enhancements_manifest": attr.label(
+            allow_single_file = [".py"],
+            mandatory = False,
+            doc = "Enhancement manifest Python file (optional)",
         ),
         "generator": attr.label(
             executable = True,

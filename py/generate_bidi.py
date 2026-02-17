@@ -14,6 +14,7 @@ Example:
 """
 
 import argparse
+import importlib.util
 import logging
 import re
 import sys
@@ -50,6 +51,51 @@ from .common import command_builder
 def indent(s: str, n: int) -> str:
     """Indent a string by n spaces."""
     return tw_indent(s, n * " ")
+
+
+def load_enhancements_manifest(manifest_path: Optional[str]) -> Dict[str, Any]:
+    """Load enhancement manifest from a Python file.
+
+    Args:
+        manifest_path: Path to Python file containing ENHANCEMENTS dict
+
+    Returns:
+        Dictionary with enhancement rules, or empty dict if no manifest provided
+    """
+    if not manifest_path:
+        return {}
+
+    manifest_file = Path(manifest_path)
+    if not manifest_file.exists():
+        logger.warning(f"Enhancement manifest not found: {manifest_path}")
+        return {}
+
+    try:
+        spec = importlib.util.spec_from_file_location(
+            "bidi_enhancements", manifest_file
+        )
+        if spec is None or spec.loader is None:
+            logger.warning(f"Could not load manifest: {manifest_path}")
+            return {}
+
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        enhancements = getattr(module, "ENHANCEMENTS", {})
+        dataclass_methods = getattr(module, "DATACLASS_METHOD_TEMPLATES", {})
+        method_docstrings = getattr(module, "DATACLASS_METHOD_DOCSTRINGS", {})
+
+        logger.info(f"Loaded enhancement manifest from: {manifest_path}")
+        logger.debug(f"Enhancements for modules: {list(enhancements.keys())}")
+
+        return {
+            "enhancements": enhancements,
+            "dataclass_methods": dataclass_methods,
+            "method_docstrings": method_docstrings,
+        }
+    except Exception as e:
+        logger.error(f"Failed to load enhancement manifest: {e}", exc_info=True)
+        return {}
 
 
 class CddlType(Enum):
@@ -97,16 +143,22 @@ class CddlCommand:
     result: Optional[str] = None
     description: str = ""
 
-    def to_python_method(self) -> str:
-        """Generate Python method code for this command."""
-        # Convert camelCase to snake_case for method names
+    def to_python_method(self, enhancements: Optional[Dict[str, Any]] = None) -> str:
+        """Generate Python method code for this command.
+
+        Args:
+            enhancements: Dictionary with enhancement rules for this method
+        """
+        enhancements = enhancements or {}
         method_name = self._camel_to_snake(self.name)
 
         # Build parameter list with type hints
         param_strs = []
+        param_names = []  # Keep track of parameter names for later use
         for param_name, param_type in self.params.items():
             python_type = CddlType.get_annotation(param_type)
             snake_param = self._camel_to_snake(param_name)
+            param_names.append((param_name, snake_param))
             param_strs.append(f"{snake_param}: {python_type} = None")
 
         if param_strs:
@@ -115,22 +167,117 @@ class CddlCommand:
             param_list = "self"
 
         # Build method body
-        body = f"    def {method_name}({param_list}) -> Generator[dict, dict, dict]:\n"
+        body = f"    def {method_name}({param_list}):\n"
         body += f'        """{self.description or "Execute " + self.module + "." + self.name}."""\n'
-        body += f"        params = {{\n"
 
-        # Add parameters to params dict
-        for param_name in self.params.keys():
-            snake_param = self._camel_to_snake(param_name)
-            body += f'            "{param_name}": {snake_param},\n'
+        # Add validation if specified
+        if "validate" in enhancements:
+            validate_func = enhancements["validate"]
+            # Build parameter list for validation function
+            param_args = ", ".join(f"{snake}={snake}" for _, snake in param_names)
+            body += f"        {validate_func}({param_args})\n"
+            body += "\n"
 
-        body += f"        }}\n"
-        body += (
-            f"        params = {{k: v for k, v in params.items() if v is not None}}\n"
-        )
-        body += f'        return command_builder("{self.module}.{self.name}", params)\n'
+        # Add transformation and preprocessing
+        # First, check if any transform is needed
+        if "transform" in enhancements:
+            transform_func = enhancements["transform"]
+            # For download_behavior, we need special handling
+            # Find the parameters that are input to the transform
+            if self.name == "setDownloadBehavior":
+                body += "        download_behavior = None\n"
+                body += f"        download_behavior = {transform_func}(allowed, destination_folder)\n"
+                body += "\n"
+
+        # Add preprocessing for serialization (check for to_bidi_dict method)
+        if "preprocess" in enhancements:
+            preprocess_rules = enhancements["preprocess"]
+            for param_name, preprocess_type in preprocess_rules.items():
+                snake_param = self._camel_to_snake(param_name)
+                if preprocess_type == "check_serialize_method":
+                    body += f"        if {snake_param} and hasattr({snake_param}, 'to_bidi_dict'):\n"
+                    body += (
+                        f"            {snake_param} = {snake_param}.to_bidi_dict()\n"
+                    )
+                    body += "\n"
+
+        # Build params dict
+        body += "        params = {\n"
+
+        # For methods with transform, use the transformed value
+        if "transform" in enhancements and self.name == "setDownloadBehavior":
+            body += '            "downloadBehavior": download_behavior,\n'
+            # Add other non-transformed parameters
+            for param_name, snake_param in param_names:
+                if param_name not in ["allowed", "destinationFolder"]:
+                    body += f'            "{param_name}": {snake_param},\n'
+        else:
+            # Standard parameter mapping
+            for param_name, snake_param in param_names:
+                body += f'            "{param_name}": {snake_param},\n'
+
+        body += "        }\n"
+        body += "        params = {k: v for k, v in params.items() if v is not None}\n"
+        body += f'        cmd = command_builder("{self.module}.{self.name}", params)\n'
+        body += "        result = self._driver.execute(cmd)\n"
+
+        # Add response handling for extraction/deserialization
+        if "extract_field" in enhancements:
+            extract_field = enhancements["extract_field"]
+            extract_property = enhancements.get("extract_property")
+
+            if extract_property:
+                # Extract property from list items
+                body += f'        if result and "{extract_field}" in result:\n'
+                body += f'            items = result.get("{extract_field}", [])\n'
+                body += f"            return [\n"
+                body += f'                item.get("{extract_property}")\n'
+                body += f"                for item in items\n"
+                body += f"                if isinstance(item, dict)\n"
+                body += f"            ]\n"
+                body += f"        return []\n"
+            else:
+                # Simple field extraction
+                body += f'        return result.get("{extract_field}") if result and "{extract_field}" in result else result\n'
+        elif "deserialize" in enhancements:
+            # Deserialize response to typed objects
+            deserialize_rules = enhancements["deserialize"]
+            for response_field, type_name in deserialize_rules.items():
+                body += f'        if result and "{response_field}" in result:\n'
+                body += f'            items = result.get("{response_field}", [])\n'
+                body += f"            return [\n"
+                body += f"                {type_name}(\n"
+                body += self._generate_field_args(response_field, type_name) + "\n"
+                body += f"                )\n"
+                body += f"                if isinstance(item, dict)\n"
+                body += f"                else item\n"
+                body += f"                for item in items\n"
+                body += f"            ]\n"
+                body += f"        return []\n"
+        else:
+            # No special response handling, just return the result
+            body += "        return result\n"
 
         return body
+
+    def _generate_field_args(self, response_field: str, type_name: str) -> str:
+        """Generate constructor arguments for deserializing response objects.
+
+        For now, this handles ClientWindowInfo specifically.
+        Could be extended to be more generic.
+        """
+        if type_name == "ClientWindowInfo":
+            return (
+                '                    active=item.get("active"),\n'
+                '                    client_window=item.get("clientWindow"),\n'
+                '                    height=item.get("height"),\n'
+                '                    state=item.get("state"),\n'
+                '                    width=item.get("width"),\n'
+                '                    x=item.get("x"),\n'
+                '                    y=item.get("y"),'
+            )
+        # For other types, add arg for each field
+        return "                )"
 
     @staticmethod
     def _camel_to_snake(name: str) -> str:
@@ -148,8 +295,16 @@ class CddlTypeDefinition:
     fields: Dict[str, str] = field(default_factory=dict)
     description: str = ""
 
-    def to_python_dataclass(self) -> str:
-        """Generate Python dataclass code for this type."""
+    def to_python_dataclass(self, enhancements: Optional[Dict[str, Any]] = None) -> str:
+        """Generate Python dataclass code for this type.
+
+        Args:
+            enhancements: Dictionary containing dataclass_methods and method_docstrings
+        """
+        enhancements = enhancements or {}
+        dataclass_methods = enhancements.get("dataclass_methods", {})
+        method_docstrings = enhancements.get("method_docstrings", {})
+
         # Generate class name from type name (keep it as-is, don't split on underscores)
         class_name = self.name
         code = f"@dataclass\n"
@@ -163,18 +318,33 @@ class CddlTypeDefinition:
                 # Convert CDDL type to Python type
                 python_type = self._get_python_type(field_type)
                 snake_name = CddlCommand._camel_to_snake(field_name)
-                
+
                 # Check if this field is a list type
                 if "List[" in python_type:
                     code += f"    {snake_name}: {python_type} = field(default_factory=list)\n"
                 else:
                     code += f"    {snake_name}: {python_type} = None\n"
 
+            # Add custom methods if defined for this class
+            if class_name in dataclass_methods:
+                code += "\n"
+                methods_dict = dataclass_methods[class_name]
+                docstrings_dict = method_docstrings.get(class_name, {})
+
+                for method_name in methods_dict:
+                    method_impl = methods_dict[method_name]
+                    docstring = docstrings_dict.get(method_name, "")
+                    code += f"    def {method_name}(self):\n"
+                    if docstring:
+                        code += f'        """{docstring}"""\n'
+                    code += f"        {method_impl}\n"
+                    code += "\n"
+
         return code
 
     @staticmethod
     def _get_python_type(cddl_type: str) -> str:
-        """Convert CDDL type to Python type annotation."""
+        """Convert CDDL type to Python type annotation using Python 3.10+ syntax."""
         cddl_type = cddl_type.strip().lower()
 
         # Handle basic types
@@ -190,20 +360,25 @@ class CddlTypeDefinition:
 
         for cddl, python in type_mapping.items():
             if cddl_type == cddl:
-                return f"Optional[{python}]"
+                # Use Python 3.10+ union syntax: type | None
+                return f"{python} | None"
 
         # Handle arrays
         if cddl_type.startswith("["):
             inner = cddl_type.strip("[]+ ")
             inner_type = CddlTypeDefinition._get_python_type(inner)
-            return f"Optional[List[{inner_type}]]"
+            # Remove " | None" from inner type since it might be wrapped
+            if " | None" in inner_type:
+                inner_base = inner_type.replace(" | None", "")
+                return f"list[{inner_base} | None] | None"
+            return f"list[{inner_type}] | None"
 
         # Handle maps/dicts
         if cddl_type.startswith("{"):
-            return "Optional[Dict[str, Any]]"
+            return "dict[str, Any] | None"
 
         # Default to Any for unknown/complex types
-        return "Optional[Any]"
+        return "Any | None"
 
 
 @dataclass
@@ -214,8 +389,13 @@ class CddlModule:
     commands: List[CddlCommand] = field(default_factory=list)
     types: List[CddlTypeDefinition] = field(default_factory=list)
 
-    def generate_code(self) -> str:
-        """Generate Python code for this module."""
+    def generate_code(self, enhancements: Optional[Dict[str, Any]] = None) -> str:
+        """Generate Python code for this module.
+
+        Args:
+            enhancements: Dictionary with module-level enhancements
+        """
+        enhancements = enhancements or {}
         code = MODULE_HEADER.format(self.name)
 
         # Add imports if needed
@@ -229,7 +409,7 @@ class CddlModule:
 
         # Generate type dataclasses first
         for type_def in self.types:
-            code += type_def.to_python_dataclass()
+            code += type_def.to_python_dataclass(enhancements)
             code += "\n\n"
 
         # Generate class
@@ -243,7 +423,11 @@ class CddlModule:
         # Generate command methods
         if self.commands:
             for command in self.commands:
-                code += command.to_python_method()
+                # Get method-specific enhancements
+                # Convert command name to snake_case to match enhancement manifest keys
+                method_name_snake = command._camel_to_snake(command.name)
+                method_enhancements = enhancements.get(method_name_snake, {})
+                code += command.to_python_method(method_enhancements)
                 code += "\n"
         else:
             code += "    pass\n"
@@ -325,31 +509,31 @@ class CddlParser:
         # Type definitions follow pattern: module.TypeName = { field: type, ... }
         # They have dots in the name and curly braces in the content
         # But they DON'T have method: "..." pattern (which means it's not a command)
-        
+
         for def_name, def_content in self.definitions.items():
             # Skip if not a namespaced name (e.g., skip "EmptyParams", "Extensible")
             if "." not in def_name:
                 continue
-            
+
             # Skip if it's a command (contains method: pattern)
             if "method:" in def_content:
                 continue
-            
+
             # Skip if it's a union/choice (contains //)
             if "//" in def_content and not def_content.strip().startswith("{"):
                 continue
-            
+
             # Extract module.TypeName
             if "." in def_name:
                 module_name, type_name = def_name.rsplit(".", 1)
-                
+
                 # Create module if not exists
                 if module_name not in self.modules:
                     self.modules[module_name] = CddlModule(name=module_name)
-                
+
                 # Extract fields from type definition
                 fields = self._extract_type_fields(def_content)
-                
+
                 if fields:  # Only create type if it has fields
                     type_def = CddlTypeDefinition(
                         module=module_name,
@@ -363,35 +547,35 @@ class CddlParser:
     def _extract_type_fields(self, type_definition: str) -> Dict[str, str]:
         """Extract fields from a type definition block."""
         fields = {}
-        
+
         # Remove outer braces
         clean_def = type_definition.strip()
         if clean_def.startswith("{"):
             clean_def = clean_def[1:]
         if clean_def.endswith("}"):
             clean_def = clean_def[:-1]
-        
+
         # Parse each line for field: type patterns
         for line in clean_def.split("\n"):
             line = line.strip()
             if not line or "Extensible" in line or line.startswith("//"):
                 continue
-            
+
             # Match pattern: [?] fieldName: type
             match = re.match(r"\?\s*(\w+)\s*:\s*(.+?)(?:,\s*)?$", line)
             if not match:
                 # Try without optional marker
                 match = re.match(r"(\w+)\s*:\s*(.+?)(?:,\s*)?$", line)
-            
+
             if match:
                 field_name = match.group(1).strip()
                 field_type = match.group(2).strip()
-                
+
                 # Skip lines that are part of nested definitions
                 if "{" not in field_type and "(" not in field_type:
                     fields[field_name] = field_type
                     logger.debug(f"Extracted field {field_name}: {field_type}")
-        
+
         return fields
 
     def _extract_commands(self) -> None:
@@ -479,7 +663,7 @@ class CddlParser:
 
 def module_name_to_class_name(module_name: str) -> str:
     """Convert module name to class name (PascalCase).
-    
+
     Handles both camelCase (browsingContext) and snake_case (browsing_context).
     """
     if "_" in module_name:
@@ -492,7 +676,7 @@ def module_name_to_class_name(module_name: str) -> str:
 
 def module_name_to_filename(module_name: str) -> str:
     """Convert module name to Python filename (snake_case).
-    
+
     Handles both camelCase (browsingContext) and snake_case (browsing_context).
     Special cases:
     - browsingContext -> browsing_context
@@ -503,10 +687,10 @@ def module_name_to_filename(module_name: str) -> str:
         "browsingContext": "browsing_context",
         "webExtension": "webextension",
     }
-    
+
     if module_name in camel_to_snake_map:
         return camel_to_snake_map[module_name]
-    
+
     if "_" in module_name:
         # Already snake_case
         return module_name
@@ -514,8 +698,9 @@ def module_name_to_filename(module_name: str) -> str:
         # Convert camelCase to snake_case for other cases
         # This handles cases like "myModuleName" -> "my_module_name"
         import re
-        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', module_name)
-        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+        s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", module_name)
+        return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
 
 
 def generate_init_file(output_path: Path, modules: Dict[str, CddlModule]) -> None:
@@ -545,8 +730,20 @@ from __future__ import annotations
     logger.info(f"Generated: {init_path}")
 
 
-def main(cddl_file: str, output_dir: str, spec_version: str = "1.0") -> None:
-    """Main entry point."""
+def main(
+    cddl_file: str,
+    output_dir: str,
+    spec_version: str = "1.0",
+    enhancements_manifest: Optional[str] = None,
+) -> None:
+    """Main entry point.
+
+    Args:
+        cddl_file: Path to CDDL specification file
+        output_dir: Output directory for generated modules
+        spec_version: BiDi spec version
+        enhancements_manifest: Path to enhancement manifest Python file
+    """
     output_path = Path(output_dir).resolve()
     output_path.mkdir(parents=True, exist_ok=True)
 
@@ -554,6 +751,11 @@ def main(cddl_file: str, output_dir: str, spec_version: str = "1.0") -> None:
     logger.info(f"Input CDDL: {cddl_file}")
     logger.info(f"Output directory: {output_path}")
     logger.info(f"Spec version: {spec_version}")
+
+    # Load enhancement manifest
+    manifest = load_enhancements_manifest(enhancements_manifest)
+    if manifest:
+        logger.info(f"Loaded enhancement manifest from: {enhancements_manifest}")
 
     # Parse CDDL
     parser = CddlParser(cddl_file)
@@ -571,8 +773,19 @@ def main(cddl_file: str, output_dir: str, spec_version: str = "1.0") -> None:
     for module_name, module in sorted(modules.items()):
         filename = module_name_to_filename(module_name)
         module_path = output_path / f"{filename}.py"
+
+        # Get module-specific enhancements (merge with dataclass templates)
+        module_enhancements = manifest.get("enhancements", {}).get(module_name, {})
+
+        # Add dataclass methods and docstrings to the enhancement data for this module
+        full_module_enhancements = {
+            **module_enhancements,
+            "dataclass_methods": manifest.get("dataclass_methods", {}),
+            "method_docstrings": manifest.get("method_docstrings", {}),
+        }
+
         with open(module_path, "w", encoding="utf-8") as f:
-            f.write(module.generate_code())
+            f.write(module.generate_code(full_module_enhancements))
         logger.info(f"Generated: {module_path}")
 
     # Generate __init__.py
@@ -604,6 +817,11 @@ if __name__ == "__main__":
         help="BiDi spec version (default: 1.0)",
     )
     parser.add_argument(
+        "--enhancements-manifest",
+        default=None,
+        help="Path to enhancement manifest Python file (optional)",
+    )
+    parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -616,7 +834,12 @@ if __name__ == "__main__":
         logging.getLogger("generate_bidi").setLevel(logging.DEBUG)
 
     try:
-        main(args.cddl_file, args.output_dir, args.version)
+        main(
+            args.cddl_file,
+            args.output_dir,
+            args.version,
+            args.enhancements_manifest,
+        )
         sys.exit(0)
     except Exception as e:
         logger.error(f"Generation failed: {e}", exc_info=True)
