@@ -249,7 +249,7 @@ class Browser:
     def set_download_behavior(
         self,
         allowed: bool | None = None,
-        destination_folder: str | None = None,
+        destination_folder: Any | None = None,
         user_contexts: list[Any] | None = None,
     ):
         """Execute browser.setDownloadBehavior."""
@@ -265,22 +265,25 @@ class Browser:
         download_behavior = None
         if allowed is True:
             download_behavior = {
-                "type": "allow",
-                "destinationFolder": destination_folder,
+                "type": "allowed",
+                "destinationFolder": str(destination_folder),
             }
         elif allowed is False:
             download_behavior = {
-                "type": "deny",
+                "type": "denied",
             }
-        elif allowed is None:
-            download_behavior = {
-                "type": "allow",
-            }
+        # When allowed is None, don't send any download_behavior
+
+        # If no downloadBehavior specified, don't send the command
+        # (it's invalid to call setDownloadBehavior without a behavior)
+        if download_behavior is None:
+            return None
 
         params = {
             "downloadBehavior": download_behavior,
             "userContexts": user_contexts,
         }
         params = {k: v for k, v in params.items() if v is not None}
+
         cmd = command_builder("browser.setDownloadBehavior", params)
         return self._driver.execute(cmd)

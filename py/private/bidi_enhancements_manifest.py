@@ -130,17 +130,17 @@ def transform_download_params(
         destination_folder: Destination folder for downloads
 
     Returns:
-        Dictionary representing the download_behavior object
+        Dictionary representing the download_behavior object, or None if allowed is None
     """
     if allowed is True:
         return {
-            "type": "allow",
+            "type": "allowed",
             "destinationFolder": destination_folder,
         }
     elif allowed is False:
-        return {"type": "deny"}
-    else:  # None defaults to allow
-        return {"type": "allow"}
+        return {"type": "denied"}
+    else:  # None - don't send any download_behavior
+        return None
 
 
 # ============================================================================
