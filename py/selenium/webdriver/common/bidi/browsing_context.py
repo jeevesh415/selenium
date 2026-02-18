@@ -253,7 +253,7 @@ class SetViewportParameters:
 
     context: Any | None = None
     viewport: Any | None = None
-    user_contexts: list[Any | None] | None = field(default_factory=list)
+    device_pixel_ratio: Any | None = None
 
 
 @dataclass
@@ -329,6 +329,9 @@ class BrowsingContext:
 
     def __init__(self, driver) -> None:
         self._driver = driver
+        self._event_handlers: dict = {}
+        self._handler_id_counter = 0
+        self._registered_ws_callbacks: set = set()
 
     def activate(self, context: Any | None = None):
         """Execute browsingContext.activate."""
@@ -344,16 +347,24 @@ class BrowsingContext:
         context: Any | None = None,
         format: Any | None = None,
         clip: Any | None = None,
+        origin: Any | None = None,
     ):
         """Execute browsingContext.captureScreenshot."""
         params = {
             "context": context,
             "format": format,
             "clip": clip,
+            "origin": origin,
         }
         params = {k: v for k, v in params.items() if v is not None}
         cmd = command_builder("browsingContext.captureScreenshot", params)
-        return self._driver.execute(cmd)
+        result = self._driver.execute(cmd)
+        # Return the base64 string directly from the data field
+        return (
+            result.get("data")
+            if isinstance(result, dict) and "data" in result
+            else result
+        )
 
     def close(self, context: Any | None = None, prompt_unload: Any | None = None):
         """Execute browsingContext.close."""
@@ -392,7 +403,9 @@ class BrowsingContext:
         }
         params = {k: v for k, v in params.items() if v is not None}
         cmd = command_builder("browsingContext.getTree", params)
-        return self._driver.execute(cmd)
+        result = self._driver.execute(cmd)
+        # Convert raw context dicts to Info objects
+        return self._convert_contexts_to_info_list(result.get("contexts", []))
 
     def handle_user_prompt(
         self,
@@ -416,6 +429,7 @@ class BrowsingContext:
         locator: Any | None = None,
         serialization_options: Any | None = None,
         start_nodes: list[Any] = None,
+        max_node_count: Any | None = None,
     ):
         """Execute browsingContext.locateNodes."""
         params = {
@@ -423,10 +437,13 @@ class BrowsingContext:
             "locator": locator,
             "serializationOptions": serialization_options,
             "startNodes": start_nodes,
+            "maxNodeCount": max_node_count,
         }
         params = {k: v for k, v in params.items() if v is not None}
         cmd = command_builder("browsingContext.locateNodes", params)
-        return self._driver.execute(cmd)
+        result = self._driver.execute(cmd)
+        # Return the nodes list directly
+        return result.get("nodes", []) if isinstance(result, dict) else result
 
     def navigate(
         self,
@@ -462,7 +479,13 @@ class BrowsingContext:
         }
         params = {k: v for k, v in params.items() if v is not None}
         cmd = command_builder("browsingContext.print", params)
-        return self._driver.execute(cmd)
+        result = self._driver.execute(cmd)
+        # Return the base64 string directly from the data field
+        return (
+            result.get("data")
+            if isinstance(result, dict) and "data" in result
+            else result
+        )
 
     def reload(
         self,
@@ -484,13 +507,13 @@ class BrowsingContext:
         self,
         context: Any | None = None,
         viewport: Any | None = None,
-        user_contexts: list[Any] = None,
+        device_pixel_ratio: Any | None = None,
     ):
         """Execute browsingContext.setViewport."""
         params = {
             "context": context,
             "viewport": viewport,
-            "userContexts": user_contexts,
+            "devicePixelRatio": device_pixel_ratio,
         }
         params = {k: v for k, v in params.items() if v is not None}
         cmd = command_builder("browsingContext.setViewport", params)
@@ -505,6 +528,244 @@ class BrowsingContext:
         params = {k: v for k, v in params.items() if v is not None}
         cmd = command_builder("browsingContext.traverseHistory", params)
         return self._driver.execute(cmd)
+
+    def add_event_handler(self, event_name: str, callback, contexts: list[str] = None):
+        """Register an event handler for the specified event.
+
+        Args:
+            event_name: The name of the event (e.g., 'context_created', 'navigation_started')
+            callback: The callable to invoke when the event occurs
+            contexts: Optional list of context IDs to filter events
+
+        Returns:
+            A callback_id that can be used to remove the handler later
+        """
+        if event_name not in self._event_handlers:
+            self._event_handlers[event_name] = {}
+
+        callback_id = self._handler_id_counter
+        self._handler_id_counter += 1
+
+        self._event_handlers[event_name][callback_id] = {
+            "callback": callback,
+            "contexts": contexts,
+        }
+
+        # If this is the first handler for this event type, subscribe at BiDi level
+        if len(self._event_handlers[event_name]) == 1:
+            self._subscribe_to_event(event_name)
+
+        return callback_id
+
+    def remove_event_handler(self, event_name: str, callback_id: int):
+        """Remove an event handler.
+
+        Args:
+            event_name: The name of the event
+            callback_id: The callback_id returned from add_event_handler
+        """
+        if event_name in self._event_handlers:
+            if callback_id in self._event_handlers[event_name]:
+                del self._event_handlers[event_name][callback_id]
+
+            # Clean up empty event entries and unsubscribe if no more handlers
+            if not self._event_handlers[event_name]:
+                del self._event_handlers[event_name]
+                self._unsubscribe_from_event(event_name)
+
+    def _subscribe_to_event(self, event_name: str):
+        """Subscribe to a BiDi event and register dispatcher with WebSocket connection."""
+        # Map Python event names to BiDi event names
+        bidi_event_map = {
+            "context_created": "browsingContext.contextCreated",
+            "context_destroyed": "browsingContext.contextDestroyed",
+            "navigation_started": "browsingContext.navigationStarted",
+            "navigation_committed": "browsingContext.navigationCommitted",
+            "navigation_failed": "browsingContext.navigationFailed",
+            "navigation_aborted": "browsingContext.navigationAborted",
+            "dom_content_loaded": "browsingContext.domContentLoaded",
+            "load": "browsingContext.load",
+            "fragment_navigated": "browsingContext.fragmentNavigated",
+            "history_updated": "browsingContext.historyUpdated",
+            "user_prompt_opened": "browsingContext.userPromptOpened",
+            "user_prompt_closed": "browsingContext.userPromptClosed",
+            "download_will_begin": "browsingContext.downloadWillBegin",
+            "download_end": "browsingContext.downloadEnd",
+        }
+
+        bidi_event_name = bidi_event_map.get(event_name)
+        if not bidi_event_name:
+            return
+
+        # The _driver is actually a WebSocketConnection object
+        ws_conn = self._driver
+
+        # Subscribe to the event via BiDi protocol
+        try:
+            from .session import Session
+
+            # Create subscription command and execute
+            subscription_cmd = Session(ws_conn).subscribe(events=[bidi_event_name])
+            ws_conn.execute(subscription_cmd)
+        except Exception:
+            # If subscription fails, continue - some events may not support subscription
+            pass
+
+        # Register dispatcher callback with WebSocket connection
+        if bidi_event_name not in self._registered_ws_callbacks:
+            # Create a dispatcher that routes events to all registered handlers
+            # Use default parameter to capture event_name value, not reference
+            def event_dispatcher(event_data, _event_name=event_name):
+                self._on_event(_event_name, event_data)
+
+            # Register with WebSocket connection
+            if bidi_event_name not in ws_conn.callbacks:
+                ws_conn.callbacks[bidi_event_name] = []
+            ws_conn.callbacks[bidi_event_name].append(event_dispatcher)
+            self._registered_ws_callbacks.add(bidi_event_name)
+
+    def _unsubscribe_from_event(self, event_name: str):
+        """Unsubscribe from a BiDi event."""
+        # Map Python event names to BiDi event names
+        bidi_event_map = {
+            "context_created": "browsingContext.contextCreated",
+            "context_destroyed": "browsingContext.contextDestroyed",
+            "navigation_started": "browsingContext.navigationStarted",
+            "navigation_committed": "browsingContext.navigationCommitted",
+            "navigation_failed": "browsingContext.navigationFailed",
+            "navigation_aborted": "browsingContext.navigationAborted",
+            "dom_content_loaded": "browsingContext.domContentLoaded",
+            "load": "browsingContext.load",
+            "fragment_navigated": "browsingContext.fragmentNavigated",
+            "history_updated": "browsingContext.historyUpdated",
+            "user_prompt_opened": "browsingContext.userPromptOpened",
+            "user_prompt_closed": "browsingContext.userPromptClosed",
+            "download_will_begin": "browsingContext.downloadWillBegin",
+            "download_end": "browsingContext.downloadEnd",
+        }
+
+        bidi_event_name = bidi_event_map.get(event_name)
+        if not bidi_event_name:
+            return
+
+        # Remove dispatcher callback from WebSocket connection to prevent events from being delivered
+        if bidi_event_name in self._registered_ws_callbacks:
+            if bidi_event_name in self._driver.callbacks:
+                # Remove all dispatchers for this event
+                self._driver.callbacks[bidi_event_name] = []
+            self._registered_ws_callbacks.discard(bidi_event_name)
+
+    def _on_event(self, event_name: str, event_data: dict):
+        """Internal callback invoked when BiDi events arrive."""
+        # Dispatch to registered handlers
+        if event_name not in self._event_handlers:
+            return
+
+        handlers_list = list(self._event_handlers[event_name].items())
+        if not handlers_list:
+            return
+
+        for callback_id, handler_info in handlers_list:
+            callback = handler_info.get("callback")
+            if not callback:
+                continue
+
+            contexts = handler_info.get("contexts")
+
+            # Convert event data to typed object
+            event_obj = self._convert_event_data(event_name, event_data)
+
+            # Check if this event should be dispatched to this handler
+            if contexts:
+                # Filter by context if specified
+                if hasattr(event_obj, "context") and event_obj.context in contexts:
+                    callback(event_obj)
+            else:
+                callback(event_obj)
+
+    def _convert_event_data(self, event_name: str, event_data: dict):
+        """Convert raw BiDi event data to typed objects."""
+
+        # Create a simple object for event data that supports dot notation
+        class EventObject:
+            def __init__(self, data):
+                for key, value in data.items():
+                    # Convert snake_case to python attributes
+                    setattr(self, key, value)
+
+        if event_name == "context_created":
+            # Convert nested context data to Info objects
+            info_data = event_data.copy()
+            if "children" in info_data and info_data["children"]:
+                info_data["children"] = [
+                    self._dict_to_info(child) for child in info_data["children"]
+                ]
+            return self._dict_to_info(info_data)
+        elif event_name == "context_destroyed":
+            return self._dict_to_info(event_data)
+        elif event_name == "user_prompt_opened":
+            return self._create_event_object(event_data)
+        elif event_name == "user_prompt_closed":
+            return self._create_event_object(event_data)
+        elif event_name == "download_will_begin":
+            return self._create_event_object(event_data)
+        elif event_name == "download_end":
+            return self._create_event_object(event_data)
+        else:
+            return self._create_event_object(event_data)
+
+    def _dict_to_info(self, data: dict) -> Info:
+        """Convert a dictionary to an Info object."""
+        if not isinstance(data, dict):
+            return data
+
+        children = data.get("children")
+        if children:
+            children = [
+                self._dict_to_info(child) if isinstance(child, dict) else child
+                for child in children
+            ]
+
+        return Info(
+            children=children,
+            client_window=data.get("clientWindow"),
+            context=data.get("context"),
+            original_opener=data.get("originalOpener"),
+            url=data.get("url"),
+            user_context=data.get("userContext"),
+            parent=data.get("parent"),
+        )
+
+    def _create_event_object(self, data: dict):
+        """Create a simple event object that supports dot notation access with snake_case attributes."""
+        import re
+
+        # Convert camelCase keys to snake_case
+        def camel_to_snake(name):
+            name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+            return re.sub("([a-z0-9])([A-Z])", r"\1_\2", name).lower()
+
+        snake_case_data = {}
+        for key, value in data.items():
+            # Convert nested dicts recursively
+            if isinstance(value, dict):
+                value = self._create_event_object(value).__dict__
+            snake_case_data[camel_to_snake(key)] = value
+
+        class EventObject:
+            def __init__(self, d):
+                self.__dict__.update(d)
+
+        return EventObject(snake_case_data)
+
+    def _convert_contexts_to_info_list(self, contexts_data: list) -> list:
+        """Convert a list of context dicts to Info objects."""
+        if not contexts_data:
+            return []
+        return [
+            self._dict_to_info(ctx) if isinstance(ctx, dict) else ctx
+            for ctx in contexts_data
+        ]
 
     def context_created(
         self,
