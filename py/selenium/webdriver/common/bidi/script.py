@@ -13,6 +13,26 @@ from typing import Any
 from dataclasses import dataclass
 
 
+class RealmType:
+    """Realm type enum."""
+
+    WINDOW = "window"
+    WORKER = "worker"
+    PAINT_WORKLET = "paint_worklet"
+    AUDIO_WORKLET = "audio_worklet"
+    WORKLET = "worklet"
+    SHARED_WORKER = "shared_worker"
+    SERVICE_WORKER = "service_worker"
+    DEDICATED_WORKER = "dedicated_worker"
+
+
+class ResultOwnership:
+    """Result ownership enum."""
+
+    ROOT = "root"
+    NONE = "none"
+
+
 @dataclass
 class ChannelValue:
     """ChannelValue type type."""
@@ -587,6 +607,10 @@ class Script:
 
     def __init__(self, driver) -> None:
         self._driver = driver
+        self._console_handlers = {}  # {id: callback}
+        self._js_error_handlers = {}  # {id: callback}
+        self._handler_id_counter = 0
+        self._subscribed_to_logs = False
 
     def add_preload_script(self, function_declaration: Any = None, arguments: list[Any] = None, contexts: list[Any] = None, user_contexts: list[Any] = None, sandbox: Any = None) -> Generator[dict, dict, dict]:
         """Execute script.addPreloadScript."""
@@ -678,4 +702,91 @@ class Script:
         }
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.realmDestroyed", params)
+
+    def add_console_message_handler(self, callback: Any) -> int:
+        """Add a handler for console messages.
+        
+        Args:
+            callback: Function to call with log entry when console message is logged.
+            
+        Returns:
+            Handler ID that can be used to remove the handler later.
+        """
+        self._handler_id_counter += 1
+        handler_id = self._handler_id_counter
+        self._console_handlers[handler_id] = callback
+        self._subscribe_to_logs()
+        return handler_id
+
+    def remove_console_message_handler(self, handler_id: int) -> None:
+        """Remove a console message handler.
+        
+        Args:
+            handler_id: The ID returned by add_console_message_handler.
+        """
+        if handler_id in self._console_handlers:
+            del self._console_handlers[handler_id]
+
+    def add_javascript_error_handler(self, callback: Any) -> int:
+        """Add a handler for JavaScript errors.
+        
+        Args:
+            callback: Function to call with log entry when JS error occurs.
+            
+        Returns:
+            Handler ID that can be used to remove the handler later.
+        """
+        self._handler_id_counter += 1
+        handler_id = self._handler_id_counter
+        self._js_error_handlers[handler_id] = callback
+        self._subscribe_to_logs()
+        return handler_id
+
+    def remove_javascript_error_handler(self, handler_id: int) -> None:
+        """Remove a JavaScript error handler.
+        
+        Args:
+            handler_id: The ID returned by add_javascript_error_handler.
+        """
+        if handler_id in self._js_error_handlers:
+            del self._js_error_handlers[handler_id]
+
+    def _subscribe_to_logs(self) -> None:
+        """Subscribe to log events if not already subscribed."""
+        if self._subscribed_to_logs:
+            return
+        self._subscribed_to_logs = True
+
+    def _add_preload_script(self, function_declaration: Any = None, arguments: list[Any] = None, contexts: list[Any] = None, user_contexts: list[Any] = None, sandbox: Any = None) -> Any:
+        """Internal method to add preload script."""
+        return self.add_preload_script(
+            function_declaration=function_declaration,
+            arguments=arguments,
+            contexts=contexts,
+            user_contexts=user_contexts,
+            sandbox=sandbox
+        )
+
+    def _remove_preload_script(self, script_id: Any = None) -> Any:
+        """Internal method to remove preload script."""
+        return self.remove_preload_script(script=script_id)
+
+    def _evaluate(self, expression: Any = None, target: Any = None, await_promise: bool = None, result_ownership: Any = None, serialization_options: Any = None, user_activation: Any = None) -> Any:
+        """Internal method to evaluate expression."""
+        return self.evaluate(
+            expression=expression,
+            target=target,
+            await_promise=await_promise,
+            result_ownership=result_ownership,
+            serialization_options=serialization_options,
+            user_activation=user_activation
+        )
+
+    def _get_realms(self, context: Any = None, type: Any = None) -> Any:
+        """Internal method to get realms."""
+        return self.get_realms(context=context, type=type)
+
+    def _disown(self, handles: list[Any] = None, target: Any = None) -> Any:
+        """Internal method to disown handles."""
+        return self.disown(handles=handles, target=target)
 

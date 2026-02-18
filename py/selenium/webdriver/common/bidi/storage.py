@@ -13,6 +13,25 @@ from typing import Any
 from dataclasses import dataclass
 
 
+class SameSite:
+    """SameSite attribute enum."""
+
+    STRICT = "strict"
+    LAX = "lax"
+    NONE = "none"
+
+
+@dataclass
+class BytesValue:
+    """BytesValue type for cookie values and similar binary data."""
+
+    TYPE_STRING = "string"
+    TYPE_BASE64 = "base64"
+
+    type: str | None = None
+    value: Any | None = None
+
+
 @dataclass
 class PartitionKey:
     """PartitionKey type type."""

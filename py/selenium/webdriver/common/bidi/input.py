@@ -13,6 +13,21 @@ from typing import Any
 from dataclasses import dataclass
 
 
+class Origin:
+    """Pointer origin type."""
+
+    VIEWPORT = "viewport"
+    POINTER = "pointer"
+
+
+class PointerType:
+    """Pointer type enum."""
+
+    MOUSE = "mouse"
+    PEN = "pen"
+    TOUCH = "touch"
+
+
 @dataclass
 class ElementOrigin:
     """ElementOrigin type type."""
