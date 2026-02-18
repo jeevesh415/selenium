@@ -193,7 +193,9 @@ class Input:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def perform_actions(self, context: Any = None, actions: list[Any] = None) -> Generator[dict, dict, dict]:
+    def perform_actions(
+        self, context: Any = None, actions: list[Any] = None
+    ) -> Generator[dict, dict, dict]:
         """Execute input.performActions."""
         params = {
             "context": context,
@@ -210,7 +212,9 @@ class Input:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("input.releaseActions", params)
 
-    def set_files(self, context: Any = None, element: Any = None, files: list[Any] = None) -> Generator[dict, dict, dict]:
+    def set_files(
+        self, context: Any = None, element: Any = None, files: list[Any] = None
+    ) -> Generator[dict, dict, dict]:
         """Execute input.setFiles."""
         params = {
             "context": context,
@@ -220,7 +224,9 @@ class Input:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("input.setFiles", params)
 
-    def file_dialog_opened(self, context: Any = None, element: Any = None, multiple: bool = None) -> Generator[dict, dict, dict]:
+    def file_dialog_opened(
+        self, context: Any = None, element: Any = None, multiple: bool = None
+    ) -> Generator[dict, dict, dict]:
         """Execute input.fileDialogOpened."""
         params = {
             "context": context,
@@ -229,4 +235,3 @@ class Input:
         }
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("input.fileDialogOpened", params)
-

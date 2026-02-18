@@ -612,7 +612,14 @@ class Script:
         self._handler_id_counter = 0
         self._subscribed_to_logs = False
 
-    def add_preload_script(self, function_declaration: Any = None, arguments: list[Any] = None, contexts: list[Any] = None, user_contexts: list[Any] = None, sandbox: Any = None) -> Generator[dict, dict, dict]:
+    def add_preload_script(
+        self,
+        function_declaration: Any = None,
+        arguments: list[Any] = None,
+        contexts: list[Any] = None,
+        user_contexts: list[Any] = None,
+        sandbox: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute script.addPreloadScript."""
         params = {
             "functionDeclaration": function_declaration,
@@ -624,7 +631,9 @@ class Script:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.addPreloadScript", params)
 
-    def disown(self, handles: list[Any] = None, target: Any = None) -> Generator[dict, dict, dict]:
+    def disown(
+        self, handles: list[Any] = None, target: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute script.disown."""
         params = {
             "handles": handles,
@@ -633,7 +642,17 @@ class Script:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.disown", params)
 
-    def call_function(self, function_declaration: Any = None, await_promise: bool = None, target: Any = None, arguments: list[Any] = None, result_ownership: Any = None, serialization_options: Any = None, this: Any = None, user_activation: Any = None) -> Generator[dict, dict, dict]:
+    def call_function(
+        self,
+        function_declaration: Any = None,
+        await_promise: bool = None,
+        target: Any = None,
+        arguments: list[Any] = None,
+        result_ownership: Any = None,
+        serialization_options: Any = None,
+        this: Any = None,
+        user_activation: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute script.callFunction."""
         params = {
             "functionDeclaration": function_declaration,
@@ -648,7 +667,15 @@ class Script:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.callFunction", params)
 
-    def evaluate(self, expression: Any = None, target: Any = None, await_promise: bool = None, result_ownership: Any = None, serialization_options: Any = None, user_activation: Any = None) -> Generator[dict, dict, dict]:
+    def evaluate(
+        self,
+        expression: Any = None,
+        target: Any = None,
+        await_promise: bool = None,
+        result_ownership: Any = None,
+        serialization_options: Any = None,
+        user_activation: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute script.evaluate."""
         params = {
             "expression": expression,
@@ -661,7 +688,9 @@ class Script:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.evaluate", params)
 
-    def get_realms(self, context: Any = None, type: Any = None) -> Generator[dict, dict, dict]:
+    def get_realms(
+        self, context: Any = None, type: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute script.getRealms."""
         params = {
             "context": context,
@@ -678,7 +707,9 @@ class Script:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.removePreloadScript", params)
 
-    def message(self, channel: Any = None, data: Any = None, source: Any = None) -> Generator[dict, dict, dict]:
+    def message(
+        self, channel: Any = None, data: Any = None, source: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute script.message."""
         params = {
             "channel": channel,
@@ -690,8 +721,7 @@ class Script:
 
     def realm_created(self) -> Generator[dict, dict, dict]:
         """Execute script.realmCreated."""
-        params = {
-        }
+        params = {}
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("script.realmCreated", params)
 
@@ -705,10 +735,10 @@ class Script:
 
     def add_console_message_handler(self, callback: Any) -> int:
         """Add a handler for console messages.
-        
+
         Args:
             callback: Function to call with log entry when console message is logged.
-            
+
         Returns:
             Handler ID that can be used to remove the handler later.
         """
@@ -720,7 +750,7 @@ class Script:
 
     def remove_console_message_handler(self, handler_id: int) -> None:
         """Remove a console message handler.
-        
+
         Args:
             handler_id: The ID returned by add_console_message_handler.
         """
@@ -729,10 +759,10 @@ class Script:
 
     def add_javascript_error_handler(self, callback: Any) -> int:
         """Add a handler for JavaScript errors.
-        
+
         Args:
             callback: Function to call with log entry when JS error occurs.
-            
+
         Returns:
             Handler ID that can be used to remove the handler later.
         """
@@ -744,7 +774,7 @@ class Script:
 
     def remove_javascript_error_handler(self, handler_id: int) -> None:
         """Remove a JavaScript error handler.
-        
+
         Args:
             handler_id: The ID returned by add_javascript_error_handler.
         """
@@ -757,21 +787,36 @@ class Script:
             return
         self._subscribed_to_logs = True
 
-    def _add_preload_script(self, function_declaration: Any = None, arguments: list[Any] = None, contexts: list[Any] = None, user_contexts: list[Any] = None, sandbox: Any = None) -> Any:
+    def _add_preload_script(
+        self,
+        function_declaration: Any = None,
+        arguments: list[Any] = None,
+        contexts: list[Any] = None,
+        user_contexts: list[Any] = None,
+        sandbox: Any = None,
+    ) -> Any:
         """Internal method to add preload script."""
         return self.add_preload_script(
             function_declaration=function_declaration,
             arguments=arguments,
             contexts=contexts,
             user_contexts=user_contexts,
-            sandbox=sandbox
+            sandbox=sandbox,
         )
 
     def _remove_preload_script(self, script_id: Any = None) -> Any:
         """Internal method to remove preload script."""
         return self.remove_preload_script(script=script_id)
 
-    def _evaluate(self, expression: Any = None, target: Any = None, await_promise: bool = None, result_ownership: Any = None, serialization_options: Any = None, user_activation: Any = None) -> Any:
+    def _evaluate(
+        self,
+        expression: Any = None,
+        target: Any = None,
+        await_promise: bool = None,
+        result_ownership: Any = None,
+        serialization_options: Any = None,
+        user_activation: Any = None,
+    ) -> Any:
         """Internal method to evaluate expression."""
         return self.evaluate(
             expression=expression,
@@ -779,7 +824,7 @@ class Script:
             await_promise=await_promise,
             result_ownership=result_ownership,
             serialization_options=serialization_options,
-            user_activation=user_activation
+            user_activation=user_activation,
         )
 
     def _get_realms(self, context: Any = None, type: Any = None) -> Any:
@@ -789,4 +834,3 @@ class Script:
     def _disown(self, handles: list[Any] = None, target: Any = None) -> Any:
         """Internal method to disown handles."""
         return self.disown(handles=handles, target=target)
-

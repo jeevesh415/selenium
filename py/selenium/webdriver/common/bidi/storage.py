@@ -138,7 +138,9 @@ class Storage:
     def __init__(self, driver) -> None:
         self._driver = driver
 
-    def get_cookies(self, filter: Any = None, partition: Any = None) -> Generator[dict, dict, dict]:
+    def get_cookies(
+        self, filter: Any = None, partition: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute storage.getCookies."""
         params = {
             "filter": filter,
@@ -147,7 +149,9 @@ class Storage:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("storage.getCookies", params)
 
-    def set_cookie(self, cookie: Any = None, partition: Any = None) -> Generator[dict, dict, dict]:
+    def set_cookie(
+        self, cookie: Any = None, partition: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute storage.setCookie."""
         params = {
             "cookie": cookie,
@@ -156,7 +160,9 @@ class Storage:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("storage.setCookie", params)
 
-    def delete_cookies(self, filter: Any = None, partition: Any = None) -> Generator[dict, dict, dict]:
+    def delete_cookies(
+        self, filter: Any = None, partition: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute storage.deleteCookies."""
         params = {
             "filter": filter,
@@ -164,4 +170,3 @@ class Storage:
         }
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("storage.deleteCookies", params)
-

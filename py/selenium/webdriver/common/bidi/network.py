@@ -334,9 +334,11 @@ class ResponseStartedParameters:
 class Request:
     """Represents a network request that can be intercepted and modified."""
 
-    def __init__(self, request_data: dict[str, Any], network_module: Any = None) -> None:
+    def __init__(
+        self, request_data: dict[str, Any], network_module: Any = None
+    ) -> None:
         """Initialize a Request object.
-        
+
         Args:
             request_data: The request data from the BiDi event.
             network_module: Reference to the Network module for executing commands.
@@ -362,16 +364,23 @@ class Request:
         request_info = self._request_data.get("request", {})
         return request_info.get("headers", [])
 
-    def continue_request(self, body: Any = None, cookies: list[Any] = None, headers: list[Any] = None, method: str = None, url: str = None) -> Any:
+    def continue_request(
+        self,
+        body: Any = None,
+        cookies: list[Any] = None,
+        headers: list[Any] = None,
+        method: str = None,
+        url: str = None,
+    ) -> Any:
         """Continue the request with optional modifications.
-        
+
         Args:
             body: Optional request body override.
             cookies: Optional cookies to modify.
             headers: Optional headers to modify.
             method: Optional HTTP method override.
             url: Optional URL override.
-            
+
         Returns:
             The result of the continue_request command.
         """
@@ -383,12 +392,12 @@ class Request:
                 cookies=cookies,
                 headers=headers,
                 method=method,
-                url=url
+                url=url,
             )
 
     def fail_request(self) -> Any:
         """Fail the request.
-        
+
         Returns:
             The result of the fail_request command.
         """
@@ -407,7 +416,14 @@ class Network:
         self._handler_id_counter = 0
         self.intercepts = []  # Track active intercepts
 
-    def add_data_collector(self, data_types: list[Any] = None, max_encoded_data_size: Any = None, collector_type: Any = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
+    def add_data_collector(
+        self,
+        data_types: list[Any] = None,
+        max_encoded_data_size: Any = None,
+        collector_type: Any = None,
+        contexts: list[Any] = None,
+        user_contexts: list[Any] = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute network.addDataCollector."""
         params = {
             "dataTypes": data_types,
@@ -419,7 +435,12 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.addDataCollector", params)
 
-    def add_intercept(self, phases: list[Any] = None, contexts: list[Any] = None, url_patterns: list[Any] = None) -> Generator[dict, dict, dict]:
+    def add_intercept(
+        self,
+        phases: list[Any] = None,
+        contexts: list[Any] = None,
+        url_patterns: list[Any] = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute network.addIntercept."""
         params = {
             "phases": phases,
@@ -429,7 +450,15 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.addIntercept", params)
 
-    def continue_request(self, request: Any = None, body: Any = None, cookies: list[Any] = None, headers: list[Any] = None, method: Any = None, url: Any = None) -> Generator[dict, dict, dict]:
+    def continue_request(
+        self,
+        request: Any = None,
+        body: Any = None,
+        cookies: list[Any] = None,
+        headers: list[Any] = None,
+        method: Any = None,
+        url: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute network.continueRequest."""
         params = {
             "request": request,
@@ -442,7 +471,15 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.continueRequest", params)
 
-    def continue_response(self, request: Any = None, cookies: list[Any] = None, credentials: Any = None, headers: list[Any] = None, reason_phrase: Any = None, status_code: Any = None) -> Generator[dict, dict, dict]:
+    def continue_response(
+        self,
+        request: Any = None,
+        cookies: list[Any] = None,
+        credentials: Any = None,
+        headers: list[Any] = None,
+        reason_phrase: Any = None,
+        status_code: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute network.continueResponse."""
         params = {
             "request": request,
@@ -463,7 +500,9 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.continueWithAuth", params)
 
-    def disown_data(self, data_type: Any = None, collector: Any = None, request: Any = None) -> Generator[dict, dict, dict]:
+    def disown_data(
+        self, data_type: Any = None, collector: Any = None, request: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute network.disownData."""
         params = {
             "dataType": data_type,
@@ -481,7 +520,13 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.failRequest", params)
 
-    def get_data(self, data_type: Any = None, collector: Any = None, disown: Any = None, request: Any = None) -> Generator[dict, dict, dict]:
+    def get_data(
+        self,
+        data_type: Any = None,
+        collector: Any = None,
+        disown: Any = None,
+        request: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute network.getData."""
         params = {
             "dataType": data_type,
@@ -492,7 +537,15 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.getData", params)
 
-    def provide_response(self, request: Any = None, body: Any = None, cookies: list[Any] = None, headers: list[Any] = None, reason_phrase: Any = None, status_code: Any = None) -> Generator[dict, dict, dict]:
+    def provide_response(
+        self,
+        request: Any = None,
+        body: Any = None,
+        cookies: list[Any] = None,
+        headers: list[Any] = None,
+        reason_phrase: Any = None,
+        status_code: Any = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute network.provideResponse."""
         params = {
             "request": request,
@@ -505,7 +558,9 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.provideResponse", params)
 
-    def remove_data_collector(self, collector: Any = None) -> Generator[dict, dict, dict]:
+    def remove_data_collector(
+        self, collector: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute network.removeDataCollector."""
         params = {
             "collector": collector,
@@ -521,7 +576,9 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.removeIntercept", params)
 
-    def set_cache_behavior(self, cache_behavior: Any = None, contexts: list[Any] = None) -> Generator[dict, dict, dict]:
+    def set_cache_behavior(
+        self, cache_behavior: Any = None, contexts: list[Any] = None
+    ) -> Generator[dict, dict, dict]:
         """Execute network.setCacheBehavior."""
         params = {
             "cacheBehavior": cache_behavior,
@@ -530,7 +587,12 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.setCacheBehavior", params)
 
-    def set_extra_headers(self, headers: list[Any] = None, contexts: list[Any] = None, user_contexts: list[Any] = None) -> Generator[dict, dict, dict]:
+    def set_extra_headers(
+        self,
+        headers: list[Any] = None,
+        contexts: list[Any] = None,
+        user_contexts: list[Any] = None,
+    ) -> Generator[dict, dict, dict]:
         """Execute network.setExtraHeaders."""
         params = {
             "headers": headers,
@@ -540,7 +602,9 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.setExtraHeaders", params)
 
-    def auth_required(self, response: Any = None, method: Any = None, params: Any = None) -> Generator[dict, dict, dict]:
+    def auth_required(
+        self, response: Any = None, method: Any = None, params: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute network.authRequired."""
         params = {
             "response": response,
@@ -550,7 +614,9 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.authRequired", params)
 
-    def before_request_sent(self, initiator: Any = None, method: Any = None, params: Any = None) -> Generator[dict, dict, dict]:
+    def before_request_sent(
+        self, initiator: Any = None, method: Any = None, params: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute network.beforeRequestSent."""
         params = {
             "initiator": initiator,
@@ -560,7 +626,9 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.beforeRequestSent", params)
 
-    def fetch_error(self, error_text: Any = None, method: Any = None, params: Any = None) -> Generator[dict, dict, dict]:
+    def fetch_error(
+        self, error_text: Any = None, method: Any = None, params: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute network.fetchError."""
         params = {
             "errorText": error_text,
@@ -570,7 +638,9 @@ class Network:
         params = {k: v for k, v in params.items() if v is not None}
         return command_builder("network.fetchError", params)
 
-    def response_completed(self, response: Any = None, method: Any = None, params: Any = None) -> Generator[dict, dict, dict]:
+    def response_completed(
+        self, response: Any = None, method: Any = None, params: Any = None
+    ) -> Generator[dict, dict, dict]:
         """Execute network.responseCompleted."""
         params = {
             "response": response,
@@ -590,11 +660,11 @@ class Network:
 
     def add_request_handler(self, phase: str, callback: Any) -> int:
         """Add a handler for network requests.
-        
+
         Args:
             phase: The phase to intercept ("before_request", "response_started", etc).
             callback: Function to call with Request object when phase is reached.
-            
+
         Returns:
             Handler ID that can be used to remove the handler later.
         """
@@ -606,7 +676,7 @@ class Network:
 
     def remove_request_handler(self, phase: str, handler_id: int) -> None:
         """Remove a request handler.
-        
+
         Args:
             phase: The phase the handler was registered for.
             handler_id: The ID returned by add_request_handler.
@@ -621,11 +691,11 @@ class Network:
 
     def add_auth_handler(self, username: str, password: str) -> int:
         """Add a handler for HTTP authentication.
-        
+
         Args:
             username: Username for authentication.
             password: Password for authentication.
-            
+
         Returns:
             Handler ID that can be used to remove the handler later.
         """
@@ -636,7 +706,7 @@ class Network:
 
     def remove_auth_handler(self, handler_id: int) -> None:
         """Remove an auth handler.
-        
+
         Args:
             handler_id: The ID returned by add_auth_handler.
         """
@@ -645,7 +715,7 @@ class Network:
 
     def _add_intercept(self) -> dict[str, Any]:
         """Internal method to add an intercept.
-        
+
         Returns:
             Dictionary with 'intercept' key containing the intercept ID.
         """
@@ -657,10 +727,9 @@ class Network:
 
     def _remove_intercept(self, intercept_id: str) -> None:
         """Internal method to remove an intercept.
-        
+
         Args:
             intercept_id: The intercept ID to remove.
         """
         if intercept_id in self.intercepts:
             self.intercepts.remove(intercept_id)
-
