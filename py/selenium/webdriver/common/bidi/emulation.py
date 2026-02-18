@@ -11,6 +11,21 @@ from .common import command_builder
 from dataclasses import field
 from typing import Any
 from dataclasses import dataclass
+from enum import Enum
+
+
+class ScreenOrientationNatural(Enum):
+    """Screen orientation natural orientation type."""
+    PORTRAIT = "portrait"
+    LANDSCAPE = "landscape"
+
+
+class ScreenOrientationType(Enum):
+    """Screen orientation type."""
+    PORTRAIT_PRIMARY = "portrait-primary"
+    PORTRAIT_SECONDARY = "portrait-secondary"
+    LANDSCAPE_PRIMARY = "landscape-primary"
+    LANDSCAPE_SECONDARY = "landscape-secondary"
 
 
 @dataclass
