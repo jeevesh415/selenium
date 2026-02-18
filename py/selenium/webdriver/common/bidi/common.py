@@ -41,7 +41,7 @@ def serialize_obj(obj: Any) -> Any:
 
     # Handle dataclass instances
     if is_dataclass(obj) and not isinstance(obj, type):
-        return {k: serialize_obj(v) for k, v in asdict(obj).items()}
+        return {k: serialize_obj(v) for k, v in asdict(obj).items() if v is not None}
 
     # Handle dictionaries recursively
     if isinstance(obj, dict):
