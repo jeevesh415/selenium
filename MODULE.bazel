@@ -36,7 +36,7 @@ single_version_override(
 
 git_override(
     module_name = "rules_ruby",
-    commit = "9c932d9167a54b1ae19b8b30d7d9a81c72d4b6e3",
+    commit = "def6f129710043bac2276c956df4775b05be6fc1",
     remote = "https://github.com/bazel-contrib/rules_ruby",
 )
 
@@ -261,7 +261,7 @@ ruby.toolchain(
         "curl",
         "libyaml",
     ],
-    rv_version = "20260114",
+    portable_ruby = True,
     version_file = "//:rb/.ruby-version",
 )
 ruby.bundle_fetch(
@@ -285,6 +285,8 @@ ruby.bundle_fetch(
         "crack-1.0.1": "ff4a10390cd31d66440b7524eb1841874db86201d5b70032028553130b6d4c7e",
         "csv-3.3.5": "6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f",
         "curb-1.0.9": "07e5b74a4836103ce186827528f76a22d3991a9b7c45f5c10ee18ee7b03feb0d",
+        "date-3.5.1": "750d06384d7b9c15d562c76291407d89e368dda4d4fff957eb94962d325a0dc0",
+        "date-3.5.1-java": "12e09477dc932afe45bf768cd362bf73026804e0db1e6c314186d6cd0bee3344",
         "debug-1.11.1": "2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6",
         "diff-lcs-1.6.2": "9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962",
         "drb-2.2.3": "0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373",
@@ -312,8 +314,8 @@ ruby.bundle_fetch(
         "pp-0.6.3": "2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6",
         "prettyprint-0.2.0": "2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193",
         "prism-1.8.0": "84453a16ef5530ea62c5f03ec16b52a459575ad4e7b9c2b360fd8ce2c39c1254",
-        "psych-5.0.1": "43264252cc33b8e626fb940cddc7379d00f7583500680da32c74a54bd9b000d0",
-        "psych-5.0.1-java": "c4a94895e325d326063f9d53f5e4f231a5df3a6e593ce9563d19b35fe11f800d",
+        "psych-5.3.1": "eb7a57cef10c9d70173ff74e739d843ac3b2c019a003de48447b2963d81b1974",
+        "psych-5.3.1-java": "20a4a81ad01479ef060f604ed75ba42fe673169e67d923b1bae5aa4e13cc5820",
         "public_suffix-7.0.2": "9114090c8e4e7135c1fd0e7acfea33afaab38101884320c65aaa0ffb8e26a857",
         "racc-1.8.1": "4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f",
         "racc-1.8.1-java": "54f2e6d1e1b91c154013277d986f52a90e5ececbe91465d29172e49342732b98",
@@ -358,7 +360,9 @@ ruby.bundle_fetch(
     },
     gemfile = "//:rb/Gemfile",
     gemfile_lock = "//:rb/Gemfile.lock",
-    ruby_version_file = "//:rb/.ruby-version",
+    jar_checksums = {
+        "org.snakeyaml:snakeyaml-engine:2.10": "c99d9fd66c7c251d881a9cd95089b7c8044c29a1b02983d7036981bd4354ec37",
+    },
 )
 use_repo(ruby, "bundle", "ruby", "ruby_toolchains")
 

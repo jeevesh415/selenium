@@ -119,9 +119,6 @@ jobs:
       - name: Set Ruby version
         if: inputs.ruby-version != ''
         run: echo '${{ inputs.ruby-version }}' > rb/.ruby-version
-      - name: Disable prebuilt Ruby
-        if: inputs.ruby-version != '' && inputs.os != 'windows'
-        run: sed '/^[[:space:]]*rv_version/d' MODULE.bazel > MODULE.bazel.tmp && mv MODULE.bazel.tmp MODULE.bazel
       - name: Setup Node
         if: inputs.node-version != ''
         uses: actions/setup-node@v4
