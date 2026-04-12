@@ -62,6 +62,7 @@ py_binary(
 compile_pip_requirements(
     # base name for generated targets, typically "requirements"
     name = "requirements",
+    extra_args = ["--no-strip-extras"],
     requirements_in = ":requirements.txt",
     requirements_txt = ":requirements_lock.txt",
     tags = [
@@ -69,11 +70,11 @@ compile_pip_requirements(
     ],
 )
 
-SE_VERSION = "4.42.0.202602192150"
+SE_VERSION = "4.44.0.202604101016"
 
 BROWSER_VERSIONS = [
-    "v143",
-    "v144",
+    "v146",
+    "v147",
     "v145",
 ]
 
